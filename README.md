@@ -1,1 +1,1 @@
-# FinRL-Contest
+# Financial-Regulations
