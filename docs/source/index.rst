@@ -34,11 +34,13 @@ FinRL Contest Documentation
 
 .. toctree::
    :maxdepth: 2
-   :caption: FinRL Contest 2023
+   :caption: FinRL Contest 2025
 
-   finrl2023/overview
-   finrl2023/task1
-   finrl2023/task2
+   finrl2025/overview
+   finrl2025/task1
+   finrl2025/task2
+   finrl2025/task3
+   finrl2025/task4
 
 .. toctree::
    :maxdepth: 2
@@ -47,3 +49,12 @@ FinRL Contest Documentation
    finrl2024/overview
    finrl2024/task1
    finrl2024/task2 
+
+.. toctree::
+   :maxdepth: 2
+   :caption: FinRL Contest 2023
+
+   finrl2023/overview
+   finrl2023/task1
+   finrl2023/task2
+
