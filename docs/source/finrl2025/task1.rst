@@ -7,7 +7,7 @@ This task is about developing automated stock trading agents trained on stock pr
 Datasets
 --------
 
-The `Financial News and Stock Price Integration Dataset (FNSPID) <https://huggingface.co/datasets/Zihan1004/FNSPID>`_ comprises stock prices and 15 million time-aligned financial news records for Nasdaq companies, covering the period from 1999 to 2023. The processed training dataset based on the FNSPID will be provided. 
+The `Financial News and Stock Price Integration Dataset (FNSPID) <https://huggingface.co/datasets/Zihan1004/FNSPID>`_ comprises stock prices and 15 million time-aligned financial news records for Nasdaq companies, covering the period from 1999 to 2023. The processed training dataset based on the FNSPID `are also provided <https://huggingface.co/datasets/benstaf/nasdaq_2013_2023>`_.
 
 Participants are also encouraged to utilize publicly available data, such as Twitter, or develop scraping/API AI agents for this purpose. Some teams can choose to focus their submission on improving the dataset, while others may focus on enhancing trading agents.
 
