@@ -28,29 +28,17 @@ To train the PPO model, run the following command:
 CPPO Training
 -------------
 
-To train the CPPO model, use the script:
-
-.. code-block:: bash
-
-    train_cppo.py
+To train the CPPO model, use the script ``train_cppo.py``
 
 PPO-DeepSeek Training
 ---------------------
 
-For training PPO-DeepSeek, use the script:
-
-.. code-block:: bash
-
-    train_ppo_llm.py
+For training PPO-DeepSeek, use the script ``train_ppo_llm.py``
 
 CPPO-DeepSeek Training
 ----------------------
 
-For training CPPO-DeepSeek, use the script:
-
-.. code-block:: bash
-
-    train_cppo_llm_risk.py
+For training CPPO-DeepSeek, use the script ``train_cppo_llm_risk.py``
 
 Environment Files
 -----------------
