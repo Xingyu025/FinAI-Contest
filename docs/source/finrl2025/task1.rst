@@ -12,12 +12,12 @@ The `Financial News and Stock Price Integration Dataset (FNSPID) <https://huggin
 Participants are also encouraged to utilize publicly available data, such as Twitter, or develop scraping/API AI agents for this purpose. Some teams can choose to focus their submission on improving the dataset, while others may focus on enhancing trading agents.
 
 Training and Environments
-=========================
+------------
 
 To train the various models, follow the instructions below:
 
 PPO Training
-------------
+=========================
 
 To train the PPO model, run the following command:
 
@@ -26,22 +26,22 @@ To train the PPO model, run the following command:
     nohup mpirun --allow-run-as-root -np 8 python train_ppo.py > output_ppo.log 2>&1 &
 
 CPPO Training
--------------
+=========================
 
 To train the CPPO model, use the script ``train_cppo.py``
 
 PPO-DeepSeek Training
----------------------
+=========================
 
 For training PPO-DeepSeek, use the script ``train_ppo_llm.py``
 
 CPPO-DeepSeek Training
-----------------------
+=========================
 
 For training CPPO-DeepSeek, use the script ``train_cppo_llm_risk.py``
 
 Environment Files
------------------
+=========================
 
 The environment files for each model are as follows:
 
@@ -50,7 +50,7 @@ The environment files for each model are as follows:
 - ``env_stocktrading_llm_risk.py`` or ``env_stocktrading_llm_risk_01.py``: Used for CPPO-DeepSeek.
 
 Log Files
----------
+=========================
 
 Log files such as ``output_ppo.log`` should be monitored during training. Key metrics to observe include:
 
@@ -59,7 +59,7 @@ Log files such as ``output_ppo.log`` should be monitored during training. Key me
 - ``ClipFrac``
 
 Evaluation
-==========
+------------
 
 Evaluation in the trading phase (2019-2023) is conducted in the ``FinRL_DeepSeek_backtest.ipynb`` Colab notebook. The metrics used are:
 
@@ -67,10 +67,10 @@ Evaluation in the trading phase (2019-2023) is conducted in the ``FinRL_DeepSeek
 - CVaR
 - Rachev Ratio
 
-Adding ``Outperformance frequency`` would be beneficial.
+Adding Outperformance frequency would be beneficial.
 
 Submission
-==========
+------------
 
 For evaluation, please submit the following links along with your paper:
 
