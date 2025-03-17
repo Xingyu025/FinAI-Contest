@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Task 1 FinRL-DeepSeek for Stock Trading &mdash; FinRL Contest Documentation 1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=e8ce10b2" />
 
@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Task 2 FinRL-AlphaSeek for Crypto Trading" href="task2.html" />
+    <link rel="next" title="Task 2: FinRL-AlphaSeek for Crypto Trading" href="task2.html" />
     <link rel="prev" title="Overview" href="overview.html" /> 
 </head>
 
@@ -60,8 +60,22 @@
 <p class="caption" role="heading"><span class="caption-text">FinRL Contest 2025</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Task 1 FinRL-DeepSeek for Stock Trading</a></li>
-<li class="toctree-l1"><a class="reference internal" href="task2.html">Task 2 FinRL-AlphaSeek for Crypto Trading</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Task 1 FinRL-DeepSeek for Stock Trading</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#datasets">Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#training-and-environments">Training and Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ppo-training">PPO Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cppo-training">CPPO Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ppo-deepseek-training">PPO-DeepSeek Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cppo-deepseek-training">CPPO-DeepSeek Training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environment-files">Environment Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-files">Log Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#evaluation">Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submission">Submission</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="task2.html">Task 2: FinRL-AlphaSeek for Crypto Trading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task3.html">Task 3 Open FinLLM Leaderboard – Models with ReFT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task4.html">Task 4 Open FinRL Leaderboard – Digital Regulatory Reporting</a></li>
 </ul>
@@ -104,6 +118,72 @@
              
   <section id="task-1-finrl-deepseek-for-stock-trading">
 <h1>Task 1 FinRL-DeepSeek for Stock Trading<a class="headerlink" href="#task-1-finrl-deepseek-for-stock-trading" title="Link to this heading"></a></h1>
+<p>This task is about developing automated stock trading agents trained on stock prices and financial news data by combining reinforcement learning and large language models (LLMs). Participants can build upon the <a class="reference external" href="https://github.com/benstaf/FinRL_DeepSeek">FinRL-DeepSeek project</a> (e.g., with new prompts, new ways to inject LLM-processed news signals into the RL agent, new RL algorithms like GRPO) or explore more computationally intensive directions, such as adapting variants of the DeepSeek R1 training method to this stock trading task.</p>
+<section id="datasets">
+<h2>Datasets<a class="headerlink" href="#datasets" title="Link to this heading"></a></h2>
+<p>The <a class="reference external" href="https://huggingface.co/datasets/Zihan1004/FNSPID">Financial News and Stock Price Integration Dataset (FNSPID)</a> comprises stock prices and 15 million time-aligned financial news records for Nasdaq companies, covering the period from 1999 to 2023. The processed training dataset based on the FNSPID <a class="reference external" href="https://huggingface.co/datasets/benstaf/nasdaq_2013_2023">are also provided</a>.</p>
+<p>Participants are also encouraged to utilize publicly available data, such as Twitter, or develop scraping/API AI agents for this purpose. Some teams can choose to focus their submission on improving the dataset, while others may focus on enhancing trading agents.</p>
+</section>
+<section id="training-and-environments">
+<h2>Training and Environments<a class="headerlink" href="#training-and-environments" title="Link to this heading"></a></h2>
+<p>To train the various models, follow the instructions below:</p>
+<section id="ppo-training">
+<h3>PPO Training<a class="headerlink" href="#ppo-training" title="Link to this heading"></a></h3>
+<p>To train the PPO model, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nohup<span class="w"> </span>mpirun<span class="w"> </span>--allow-run-as-root<span class="w"> </span>-np<span class="w"> </span><span class="m">8</span><span class="w"> </span>python<span class="w"> </span>train_ppo.py<span class="w"> </span>&gt;<span class="w"> </span>output_ppo.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">&amp;</span>
+</pre></div>
+</div>
+</section>
+<section id="cppo-training">
+<h3>CPPO Training<a class="headerlink" href="#cppo-training" title="Link to this heading"></a></h3>
+<p>To train the CPPO model, use the script <code class="docutils literal notranslate"><span class="pre">train_cppo.py</span></code></p>
+</section>
+<section id="ppo-deepseek-training">
+<h3>PPO-DeepSeek Training<a class="headerlink" href="#ppo-deepseek-training" title="Link to this heading"></a></h3>
+<p>For training PPO-DeepSeek, use the script <code class="docutils literal notranslate"><span class="pre">train_ppo_llm.py</span></code></p>
+</section>
+<section id="cppo-deepseek-training">
+<h3>CPPO-DeepSeek Training<a class="headerlink" href="#cppo-deepseek-training" title="Link to this heading"></a></h3>
+<p>For training CPPO-DeepSeek, use the script <code class="docutils literal notranslate"><span class="pre">train_cppo_llm_risk.py</span></code></p>
+</section>
+<section id="environment-files">
+<h3>Environment Files<a class="headerlink" href="#environment-files" title="Link to this heading"></a></h3>
+<p>The environment files for each model are as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">env_stocktrading.py</span></code>: Used for PPO and CPPO, same as in the original FinRL.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env_stocktrading_llm.py</span></code> or <code class="docutils literal notranslate"><span class="pre">env_stocktrading_llm_01.py</span></code>: Used for PPO-DeepSeek, depending on the desired LLM influence.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env_stocktrading_llm_risk.py</span></code> or <code class="docutils literal notranslate"><span class="pre">env_stocktrading_llm_risk_01.py</span></code>: Used for CPPO-DeepSeek.</p></li>
+</ul>
+</section>
+<section id="log-files">
+<h3>Log Files<a class="headerlink" href="#log-files" title="Link to this heading"></a></h3>
+<p>Log files such as <code class="docutils literal notranslate"><span class="pre">output_ppo.log</span></code> should be monitored during training. Key metrics to observe include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AverageEpRet</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">KL</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ClipFrac</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading"></a></h2>
+<p>Evaluation in the trading phase (2019-2023) is conducted in the <code class="docutils literal notranslate"><span class="pre">FinRL_DeepSeek_backtest.ipynb</span></code> Colab notebook. The metrics used are:</p>
+<ul class="simple">
+<li><p>Information Ratio</p></li>
+<li><p>CVaR</p></li>
+<li><p>Rachev Ratio</p></li>
+</ul>
+<p>Adding Outperformance frequency would be beneficial.</p>
+</section>
+<section id="submission">
+<h2>Submission<a class="headerlink" href="#submission" title="Link to this heading"></a></h2>
+<p>For evaluation, please submit the following links along with your paper:</p>
+<ul class="simple">
+<li><p>GitHub repository link</p></li>
+<li><p>Hugging Face link</p></li>
+<li><p>Colab notebook link</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -111,7 +191,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="task2.html" class="btn btn-neutral float-right" title="Task 2 FinRL-AlphaSeek for Crypto Trading" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="task2.html" class="btn btn-neutral float-right" title="Task 2: FinRL-AlphaSeek for Crypto Trading" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
