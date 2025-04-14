@@ -20,7 +20,6 @@ FinRL Contest Documentation
    :caption: Introduction
 
    intro/overview
-   intro/finrl
    intro/data
    intro/env
    intro/agent
