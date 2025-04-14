@@ -102,12 +102,21 @@
              
   <section id="finrl-contest-documentation">
 <h1>FinRL Contest Documentation<a class="headerlink" href="#finrl-contest-documentation" title="Link to this heading"></a></h1>
+<p>Financial reinforcement learning (FinRL) applies reinforcement learning algorithms to financial tasks, such as order execution, portfolio management, high-frequency trading, option pricing and hedging, and market making.</p>
+<p>From 2023 to 2025, we have organized three FinRL Contests featuring different financial tasks. These tasks allow contestants to participate in various financial tasks and contribute to open finance using state-of-the-art technologies.</p>
+<p>From FinRL and FinRL-Meta, we select stable market environments to define tasks. We provide diverse datasets, including OHLCV data, limit order books (LOB) data, and financial news. We also provide environments that incorporate LLM-generated signals and support massively parallel simulation. We provide an ensemble learning approach with GPU-optimized parallel environments to mitigate policy instability and address sampling bottleneck.</p>
+<a class="reference internal image-reference" href="_images/FinRL_Contest_Tasks.png"><img alt="_images/FinRL_Contest_Tasks.png" class="align-center" src="_images/FinRL_Contest_Tasks.png" style="width: 100%;" />
+</a>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro/overview.html#motivation">Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro/overview.html#automated-trading-in-finrl">Automated Trading in FinRL</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="intro/data.html">Market Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro/env.html">Environment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro/agent.html">Agent</a></li>

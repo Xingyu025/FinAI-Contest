@@ -10,6 +10,17 @@ FinRL Contest Documentation
    `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
    documentation for details.
 
+Financial reinforcement learning (FinRL) applies reinforcement learning algorithms to financial tasks, such as order execution, portfolio management, high-frequency trading, option pricing and hedging, and market making.
+
+From 2023 to 2025, we have organized three FinRL Contests featuring different financial tasks. These tasks allow contestants to participate in various financial tasks and contribute to open finance using state-of-the-art technologies.
+
+From FinRL and FinRL-Meta, we select stable market environments to define tasks. We provide diverse datasets, including OHLCV data, limit order books (LOB) data, and financial news. We also provide environments that incorporate LLM-generated signals and support massively parallel simulation. We provide an ensemble learning approach with GPU-optimized parallel environments to mitigate policy instability and address sampling bottleneck. 
+
+.. image:: ./image/FinRL_Contest_Tasks.png
+   :width: 100%
+   :align: center
+
+
 
 .. toctree::
    :maxdepth: 2
