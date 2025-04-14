@@ -18,9 +18,9 @@ The **FinRL Contest 2025** explores and evaluates the capability of machine lear
 3. **Open FinLLM Leaderboard**.  
    The `Open FinLLM Leaderboard <https://huggingface.co/spaces/finosfoundation/Open-Financial-LLM-Leaderboard>`_ [7]_ is an open platform for evaluating LLMs on a wide range of financial tasks, emphasizing transparency and reproducibility. In addition to general financial benchmarks, we have extended the leaderboard with datasets focused on digital regulatory reporting, originally developed for the `Regulations Challenge at COLING 2025 <https://coling2025regulations.thefin.ai/home>`_ [8]_. These include:
 
-   - **Common Domain Model (CDM)**
-   - **Model Openness Framework (MOF)**
-   - **eXtensible Business Reporting Language (XBRL)**
+   - **Common Domain Model (CDM)**: a machine-oriented model for managing the lifecycle of financial products and transactions.
+   - **Model Openness Framework (MOF)**: a three-tiered ranked classification system to evaluate the completeness and openness of machine learning models. 
+   - **eXtensible Business Reporting Language (XBRL)**: a standard for electronic communication of business and financial data.
 
    Participants are invited to contribute to these benchmarks and also explore reinforcement learning approaches for improving LLMs' ability in various financial tasks.
 
