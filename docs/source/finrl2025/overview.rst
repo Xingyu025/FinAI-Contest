@@ -40,8 +40,7 @@ We organize four tasks to promote open finance:
 For Task 1 and Task 2, we provide **parallel market environments** [9]_ that incorporate LLM-generated signals and support massivley parallel simulation.
 
 
-References
-==========
+**References**
 
 .. [1] X.-Y. Liu, Z. Xia, H. Yang, J. Gao, D. Zha, M. Zhu, Christina D. Wang*, Zhaoran Wang, and Jian Guo. Dynamic datasets and market environments for financial reinforcement learning. *Machine Learning Journal, Springer Nature*, 2023.
 
