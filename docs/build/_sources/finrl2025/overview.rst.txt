@@ -4,23 +4,28 @@ Overview
 
 Financial reinforcement learning (FinRL) [1]_ [2]_ is an interdisciplinary field that applies reinforcement learning to financial tasks such as portfolio management, algorithmic trading, and option pricing [3]_ [4]_ [5]_. Recent breakthroughs in large language models (LLMs) are driving open finance, which provides affordable and scalable solutions for customers to make intelligent decisions, enabling personalized financial search and robo-advisors.
 
+Features
+---------------
+
 The **FinRL Contest 2025** explores and evaluates the capability of machine learning methods in finance, with the following featured tracks:
 
 1. **FinRL-DeepSeek**. 
-   DeepSeek’s groundbreaking open models have demonstrated strong capabilities on par with proprietary models. FinRL-DeepSeek [6]_ integrates financial reinforcement learning with LLMs to enhance stock trading strategies by incorporating risk assessments and trading recommendation signals extracted from financial news. Participants are encouraged to explore and innovate with FinRL-DeepSeek.
+   DeepSeek’s groundbreaking open models have demonstrated strong capabilities on par with proprietary models. FinRL-DeepSeek [6]_ integrates LLM-generated signals in FinRL to enhance stock trading strategies, inlcuding sentiment scores and risk levels extracted from financial news. Participants are encouraged to explore and innovate with FinRL-DeepSeek.
 
 2. **FinRL-AlphaSeek**.  
-   Factors are crucial in driving trading decisions and in enabling traders to design efficient, data-driven strategies. This task involves two stages: factor engineering and ensemble learning. Participants are encouraged to perform independent factor engineering and utilize ensemble methods to develop robust trading agents.
+   Factors are crucial in driving trading decisions and in enabling traders to design efficient, data-driven strategies. This task involves two stages: factor engineering and ensemble learning. Participants are encouraged to perform factor engineering and utilize ensemble methods to develop robust trading agents.
 
 3. **Open FinLLM Leaderboard**.  
-   The `Open FinLLM Leaderboard <https://huggingface.co/spaces/finosfoundation/Open-Financial-LLM-Leaderboard>`_ [7]_ is an open platform for evaluating LLMs on a wide range of financial tasks, emphasizing transparency and reproducibility. In addition to general financial benchmarks, we have extended the leaderboard with datasets focused on complex financial regulations and industry standards, originally developed for the `Regulations Challenge at COLING 2025 <https://coling2025regulations.thefin.ai/home>`_ [8]_. These include:
+   The `Open FinLLM Leaderboard <https://huggingface.co/spaces/finosfoundation/Open-Financial-LLM-Leaderboard>`_ [7]_ is an open platform for evaluating LLMs on a wide range of financial tasks, emphasizing transparency and reproducibility. In addition to general financial benchmarks, we have extended the leaderboard with datasets focused on digital regulatory reporting, originally developed for the `Regulations Challenge at COLING 2025 <https://coling2025regulations.thefin.ai/home>`_ [8]_. These include:
 
    - **Common Domain Model (CDM)**
    - **Model Openness Framework (MOF)**
    - **eXtensible Business Reporting Language (XBRL)**
 
-   Participants are invited to contribute to these benchmarks and also explore reinforcement learning approaches for improving LLMs.
+   Participants are invited to contribute to these benchmarks and also explore reinforcement learning approaches for improving LLMs' ability in various financial tasks.
 
+Tasks
+---------------
 We organize four tasks to promote open finance:
 
 1. **FinRL-DeepSeek for Stock Trading**.
