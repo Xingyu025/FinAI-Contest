@@ -47,8 +47,7 @@
               <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/finrl.html">FinRL</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/data.html">Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/data.html">Market Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/env.html">Environment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/agent.html">Agent</a></li>
 </ul>
@@ -59,7 +58,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">FinRL Contest 2025</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="task1.html">Task 1 FinRL-DeepSeek for Stock Trading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task2.html">Task 2: FinRL-AlphaSeek for Crypto Trading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task3.html">Task 3 Open FinLLM Leaderboard – Models with ReFT</a></li>
@@ -104,6 +106,88 @@
              
   <section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
+<p>Financial reinforcement learning (FinRL) <a class="footnote-reference brackets" href="#id10" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id11" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> is an interdisciplinary field that applies reinforcement learning to financial tasks such as portfolio management, algorithmic trading, and option pricing <a class="footnote-reference brackets" href="#id12" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id13" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id14" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. Recent breakthroughs in large language models (LLMs) are driving open finance, which provides affordable and scalable solutions for customers to make intelligent decisions, enabling personalized financial search and robo-advisors.</p>
+<p>The <strong>FinRL Contest 2025</strong> explores and evaluates the capability of machine learning methods in finance, with the following featured tracks:</p>
+<ol class="arabic">
+<li><p><strong>FinRL-DeepSeek</strong>.
+DeepSeek’s groundbreaking open models have demonstrated strong capabilities on par with proprietary models. FinRL-DeepSeek <a class="footnote-reference brackets" href="#id15" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> integrates financial reinforcement learning with LLMs to enhance stock trading strategies by incorporating risk assessments and trading recommendation signals extracted from financial news. Participants are encouraged to explore and innovate with FinRL-DeepSeek.</p></li>
+<li><p><strong>FinRL-AlphaSeek</strong>.
+Factors are crucial in driving trading decisions and in enabling traders to design efficient, data-driven strategies. This task involves two stages: factor engineering and ensemble learning. Participants are encouraged to perform independent factor engineering and utilize ensemble methods to develop robust trading agents.</p></li>
+<li><p><strong>Open FinLLM Leaderboard</strong>.
+The <a class="reference external" href="https://huggingface.co/spaces/finosfoundation/Open-Financial-LLM-Leaderboard">Open FinLLM Leaderboard</a> <a class="footnote-reference brackets" href="#id16" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> is an open platform for evaluating LLMs on a wide range of financial tasks, emphasizing transparency and reproducibility. In addition to general financial benchmarks, we have extended the leaderboard with datasets focused on complex financial regulations and industry standards, originally developed for the <a class="reference external" href="https://coling2025regulations.thefin.ai/home">Regulations Challenge at COLING 2025</a> <a class="footnote-reference brackets" href="#id17" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>. These include:</p>
+<ul class="simple">
+<li><p><strong>Common Domain Model (CDM)</strong></p></li>
+<li><p><strong>Model Openness Framework (MOF)</strong></p></li>
+<li><p><strong>eXtensible Business Reporting Language (XBRL)</strong></p></li>
+</ul>
+<p>Participants are invited to contribute to these benchmarks and also explore reinforcement learning approaches for improving LLMs.</p>
+</li>
+</ol>
+<p>We organize four tasks to promote open finance:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt><strong>FinRL-DeepSeek for Stock Trading</strong>.</dt><dd><p>Develop stock trading agents by integrating LLM-generated signals in FinRL, using financial news and market data.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>FinRL-AlphaSeek for Crypto Trading</strong>.</dt><dd><p>Develop crypto trading agents using factor mining and ensemble learning to improve trading performance.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Open FinLLM Leaderboard – Models with Reinforcement Fine-Tuning (ReFT)</strong>.</dt><dd><p>Train and fine-tune financial LLMs with ReFT and compete in the Open FinLLM Leaderboard.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Open FinLLM Leaderboard – Digital Regulatory Reporting (DRR)</strong>.</dt><dd><p>Train and fine-tune LLMs to improve their ability in digital regulatory reporting: CDM, MOF, and XBRL.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>For Task 1 and Task 2, we provide <strong>parallel market environments</strong> <a class="footnote-reference brackets" href="#id18" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a> that incorporate LLM-generated signals and support massivley parallel simulation.</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>X.-Y. Liu, Z. Xia, H. Yang, J. Gao, D. Zha, M. Zhu, Christina D. Wang*, Zhaoran Wang, and Jian Guo. Dynamic datasets and market environments for financial reinforcement learning. <em>Machine Learning Journal, Springer Nature</em>, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id11" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>X.-Y. Liu, Z. Xia, J. Rui, J. Gao, H. Yang, M. Zhu, C. Wang, Z. Wang, J. Guo. FinRL-Meta: Market environments and benchmarks for data-driven financial reinforcement learning. <em>NeurIPS, Special Track on Datasets and Benchmarks</em>, 2022.</p>
+</aside>
+<aside class="footnote brackets" id="id12" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Ben Hambly, Renyuan Xu, and Huining Yang. Recent advances in reinforcement learning in finance. <em>Mathematical Finance</em>, vol. 33, no. 3, pp. 437–503, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id13" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Shuo Sun, Rundong Wang, and Bo An. Reinforcement learning for quantitative trading. <em>ACM Transactions on Intelligent Systems and Technology</em>, vol. 14, no. 3, pp. 1–29, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id14" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>Yahui Bai, Yuhe Gao, Runzhe Wan, Sheng Zhang, and Rui Song. A review of reinforcement learning in financial applications. <em>Annual Review of Statistics and Its Application</em>, vol. 12, no. 1, pp. 209–232, 2025.</p>
+</aside>
+<aside class="footnote brackets" id="id15" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">6</a><span class="fn-bracket">]</span></span>
+<p>Mostapha Benhenda. 2025. FinRL-DeepSeek: LLM-Infused Risk-Sensitive Reinforcement Learning for Trading Agents. arXiv preprint arXiv:2502.07393 (2025).</p>
+</aside>
+<aside class="footnote brackets" id="id16" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">7</a><span class="fn-bracket">]</span></span>
+<p>Shengyuan Colin Lin, Felix Tian, Keyi Wang, Xingjian Zhao, Jimin Huang, Qian-qian Xie, Luca Borella, Christina Dan Wang, Matt White, Kairong Xiao, Xiao-Yang Liu Yanglet, and Li Deng. 2024. Open FinLLM Leaderboard: Towards Financial AI Readiness. <em>International Workshop on Multimodal Financial Foundation Models (MFFMs), ACM International Conference on AI in Finance</em>, 2024.</p>
+</aside>
+<aside class="footnote brackets" id="id17" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">8</a><span class="fn-bracket">]</span></span>
+<p>Keyi Wang, Jaisal Patel, Charlie Shen, Daniel Kim, Andy Zhu, Alex Lin, Luca Borella, Cailean Osborne, Matt White, Steve Yang, Kairong Xiao, and Xiao-Yang Liu Yanglet. 2025. A Report on Financial Regulations Challenge at COLING 2025. <em>Proceedings of the Joint Workshop of FinNLP, FNP, and LLMFinLegal</em>, 2025.</p>
+</aside>
+<aside class="footnote brackets" id="id18" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">9</a><span class="fn-bracket">]</span></span>
+<p>Keyi Wang, Kairong Xiao, and Xiao-Yang Liu. Parallel Market Environments for FinRL Contests. arXiv preprint arXiv:2504.02281 (2025).</p>
+</aside>
+</aside>
+</section>
 </section>
 
 
