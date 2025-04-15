@@ -9,9 +9,33 @@ We provide a variety of market data for FinRL Contests, including:
 
 OHLCV data
 ---------------------------
-
 OHLCV
 ~~~~~~~~~~~~~~~~~
+For stock trading tasks, we use daily OHLCV data, a rich source for learning financial market behaviors and trends. It’s a list of five most common types of data in financial analysis: 
+
+    - **Open**: The price at which the stock opened for trading on a trading day.
+    - **High**: The highest price at which the stock traded during a trading day.
+    - **Low**: The lowest price at which the stock traded during a trading day.
+    - **Close**: The price at which the stock closed at the end of a trading day.
+    - **Volume**: The total number of shares traded during a trading day.
+
+To download the OHLCV data, we can use `yfinance`. The data is stored in a CSV file, which can be easily read and processed.
+
+.. code-block:: python
+
+    import yfinance as yf
+    tickers = ['AAPL', 'MSFT', 'GOOG', 'AMZN', 'TSLA']
+    start_date = '2020-01-01'
+    end_date = '2025-01-01'
+    data = yf.download(
+        tickers=tickers,
+        start=start_date,
+        end=end_date,
+        group_by='ticker',
+        interval='1d',  # Daily data
+    )
+    data.to_csv('ohlcv_data.csv')
+
 
 Feature Engineering
 ~~~~~~~~~~~~~~~~~~~~~

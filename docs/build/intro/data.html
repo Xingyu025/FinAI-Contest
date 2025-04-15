@@ -132,6 +132,31 @@
 <h2>OHLCV data<a class="headerlink" href="#ohlcv-data" title="Link to this heading"></a></h2>
 <section id="ohlcv">
 <h3>OHLCV<a class="headerlink" href="#ohlcv" title="Link to this heading"></a></h3>
+<p>For stock trading tasks, we use daily OHLCV data, a rich source for learning financial market behaviors and trends. It’s a list of five most common types of data in financial analysis:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Open</strong>: The price at which the stock opened for trading on a trading day.</p></li>
+<li><p><strong>High</strong>: The highest price at which the stock traded during a trading day.</p></li>
+<li><p><strong>Low</strong>: The lowest price at which the stock traded during a trading day.</p></li>
+<li><p><strong>Close</strong>: The price at which the stock closed at the end of a trading day.</p></li>
+<li><p><strong>Volume</strong>: The total number of shares traded during a trading day.</p></li>
+</ul>
+</div></blockquote>
+<p>To download the OHLCV data, we can use <cite>yfinance</cite>. The data is stored in a CSV file, which can be easily read and processed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOG&#39;</span><span class="p">,</span> <span class="s1">&#39;AMZN&#39;</span><span class="p">,</span> <span class="s1">&#39;TSLA&#39;</span><span class="p">]</span>
+<span class="n">start_date</span> <span class="o">=</span> <span class="s1">&#39;2020-01-01&#39;</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="s1">&#39;2025-01-01&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span>
+    <span class="n">tickers</span><span class="o">=</span><span class="n">tickers</span><span class="p">,</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
+    <span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
+    <span class="n">group_by</span><span class="o">=</span><span class="s1">&#39;ticker&#39;</span><span class="p">,</span>
+    <span class="n">interval</span><span class="o">=</span><span class="s1">&#39;1d&#39;</span><span class="p">,</span>  <span class="c1"># Daily data</span>
+<span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;ohlcv_data.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="feature-engineering">
 <h3>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Link to this heading"></a></h3>
