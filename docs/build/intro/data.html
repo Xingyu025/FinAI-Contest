@@ -125,7 +125,7 @@
 <div><ul class="simple">
 <li><p><strong>OHLCV data</strong>: daily open, high, low, close, volume data for stocks.</p></li>
 <li><p><strong>Limit Order Book (LOB) data</strong>: second-level LOB data for Bitcoin.</p></li>
-<li><p><strong>Financial news data</strong>: Financial news for different stocks.</p></li>
+<li><p><strong>Financial news data</strong>: financial news for different stocks.</p></li>
 </ul>
 </div></blockquote>
 <section id="ohlcv-data">
@@ -135,11 +135,11 @@
 <p>For stock trading tasks, we use daily OHLCV data, a rich source for learning financial market behaviors and trends. It’s a list of five most common types of data in financial analysis:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><strong>Open</strong>: The price at which the stock opened for trading on a trading day.</p></li>
-<li><p><strong>High</strong>: The highest price at which the stock traded during a trading day.</p></li>
-<li><p><strong>Low</strong>: The lowest price at which the stock traded during a trading day.</p></li>
-<li><p><strong>Close</strong>: The price at which the stock closed at the end of a trading day.</p></li>
-<li><p><strong>Volume</strong>: The total number of shares traded during a trading day.</p></li>
+<li><p><strong>Open</strong>: the price at which the stock opened for trading on a trading day.</p></li>
+<li><p><strong>High</strong>: the highest price at which the stock traded during a trading day.</p></li>
+<li><p><strong>Low</strong>: the lowest price at which the stock traded during a trading day.</p></li>
+<li><p><strong>Close</strong>: the price at which the stock closed at the end of a trading day.</p></li>
+<li><p><strong>Volume</strong>: the total number of shares traded during a trading day.</p></li>
 </ul>
 </div></blockquote>
 <p>To download the OHLCV data, we can use <cite>yfinance</cite>. The data is stored in a CSV file, which can be easily read and processed.</p>
@@ -160,6 +160,62 @@
 </section>
 <section id="feature-engineering">
 <h3>Feature Engineering<a class="headerlink" href="#feature-engineering" title="Link to this heading"></a></h3>
+<p>We also provide 10 market indicators, which are explained below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12.5%" />
+<col style="width: 25.0%" />
+<col style="width: 62.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Indicator</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>macd</p></td>
+<td><p>Moving Average Convergence Divergence</p></td>
+<td><p>A trend-following momentum indicator that shows the relationship between two exponential moving averages (EMAs) of a stock’s price. Traders use the MACD to identify potential trend changes, divergence between price and momentum, and overbought or oversold conditions.</p></td>
+</tr>
+<tr class="row-odd"><td><p>boll_ub</p></td>
+<td><p>Bollinger Bands Upper Band</p></td>
+<td><p>Bollinger Bands are used to visualize the volatility and potential price levels of a stock. The upper band represents the upper volatility boundary, showing where the price might find resistance.</p></td>
+</tr>
+<tr class="row-even"><td><p>boll_lb</p></td>
+<td><p>Bollinger Bands Lower Band</p></td>
+<td><p>The lower band represents the lower volatility boundary and shows where the price might find support.</p></td>
+</tr>
+<tr class="row-odd"><td><p>rsi_30</p></td>
+<td><p>Relative Strength Index for 30 periods</p></td>
+<td><p>A momentum oscillator that measures the speed and change of price movements. RSI oscillates between zero and 100.</p></td>
+</tr>
+<tr class="row-even"><td><p>cci_30</p></td>
+<td><p>Commodity Channel Index for 30 periods</p></td>
+<td><p>A versatile indicator that can be used to identify a new trend or warn of extreme conditions. It measures the current price level relative to an average price level over a given period of time.</p></td>
+</tr>
+<tr class="row-odd"><td><p>dx_30</p></td>
+<td><p>Directional Movement Index for 30 periods</p></td>
+<td><p>An indicator that assesses the strength and direction of a trend by comparing highs and lows over time.</p></td>
+</tr>
+<tr class="row-even"><td><p>close_30</p></td>
+<td><p>30-Period Simple Moving Average of Closing Prices</p></td>
+<td><p>Represents the average closing price over the last 30 periods. This moving average smooths price data to help identify trends and potential support/resistance levels.</p></td>
+</tr>
+<tr class="row-odd"><td><p>close_60</p></td>
+<td><p>60-Period Simple Moving Average of Closing Prices</p></td>
+<td><p>Represents the average closing price over the last 60 periods. Like the 30-period average, it helps visualize longer-term trends and support/resistance zones.</p></td>
+</tr>
+<tr class="row-even"><td><p>vix</p></td>
+<td><p>Volatility Index</p></td>
+<td><p>Often referred to as the “fear index”, it represents the market’s expectation of 30-day forward-looking volatility. Calculated from prices of selected stock option contracts on the S&amp;P 500 Index.</p></td>
+</tr>
+<tr class="row-odd"><td><p>turbulance</p></td>
+<td><p>Turbulence</p></td>
+<td><p>A risk control measure used in FinRL that quantifies extreme asset price fluctuations, useful for handling worst-case market scenarios like the 2007–2008 financial crisis.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="limit-order-book-lob-data">
