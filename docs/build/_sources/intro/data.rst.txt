@@ -36,6 +36,7 @@ To download the OHLCV data, we can use `yfinance`. The data is stored in a CSV f
     )
     data.to_csv('ohlcv_data.csv')
 
+.. _technical-indicators:
 
 Feature Engineering
 ~~~~~~~~~~~~~~~~~~~~~
