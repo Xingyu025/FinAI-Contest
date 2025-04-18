@@ -20,6 +20,11 @@ From FinRL and FinRL-Meta, we select stable market environments to define tasks.
    :width: 100%
    :align: center
 
+FinRL Contest 2025: `Contest Website <https://open-finance-lab.github.io/FinRL_Contest_2025/>`_; `Starter Kit <https://github.com/Open-Finance-Lab/FinRL_Contest_2025>`_
+
+FinRL Contest 2024: `Contest Website <https://open-finance-lab.github.io/finrl-contest.github.io/>`_; `Starter Kit <https://github.com/Open-Finance-Lab/FinRL_Contest_2024>`_
+
+FinRL Contest 2023: `Contest Website <https://open-finance-lab.github.io/finrl-contest.github.io/>`_; `Starter Kit <https://github.com/Open-Finance-Lab/FinRL_Contest_2023>`_
 
 
 .. toctree::

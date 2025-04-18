@@ -9,8 +9,6 @@ We provide a variety of market data for FinRL Contests, including:
 
 OHLCV data
 ---------------------------
-OHLCV
-~~~~~~~~~~~~~~~~~
 For stock trading tasks, we use daily OHLCV data, a rich source for learning financial market behaviors and trends. It’s a list of five most common types of data in financial analysis: 
 
     - **Open**: the price at which the stock opened for trading on a trading day.
@@ -35,6 +33,72 @@ To download the OHLCV data, we can use `yfinance`. The data is stored in a CSV f
         interval='1d',  # Daily data
     )
     data.to_csv('ohlcv_data.csv')
+
+
+Limit Order Book (LOB) data
+---------------------------
+
+
+
+
+Financial news data - FNSPID [1]_
+---------------------------
+The `Financial News and Stock Price Integration Dataset (FNSPID) <https://huggingface.co/datasets/Zihan1004/FNSPID>`_ is a comprehensive financial news dataset. It contains historical stock prices and over 15 million time-aligned financial news articles related to Nasdaq-listed companies, spanning from 1999 to 2023. 
+
+Here is a preview of the dataset:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 30 10 50 20 10 10 10 10 10 10
+
+   * - Date
+     - Article_title
+     - Stock_symbol
+     - Url
+     - Publisher
+     - Author
+     - Article
+     - Lsa_summary
+     - Luhn_summary
+     - Textrank_summary
+     - Lexrank_summary
+   * - 2020-06-05 06:30:54 UTC
+     - Stocks That Hit 52-Week Highs On Friday
+     - A
+     - https://www.benzinga.com/news/20/06/16190091/stocks-that-hit-52-week-highs-on-friday
+     - Benzinga Insights
+     - null
+     - null
+     - null
+     - null
+     - null
+     - null
+   * - 2020-06-03 06:45:20 UTC
+     - Stocks That Hit 52-Week Highs On Wednesday
+     - A
+     - https://www.benzinga.com/news/20/06/16170189/stocks-that-hit-52-week-highs-on-wednesday
+     - Benzinga Insights
+     - null
+     - null
+     - null
+     - null
+     - null
+     - null
+   * - 2020-05-26 00:30:07 UTC
+     - 71 Biggest Movers From Friday
+     - A
+     - https://www.benzinga.com/news/20/05/16103463/71-biggest-movers-from-friday
+     - Lisa Levin
+     - null
+     - null
+     - null
+     - null
+     - null
+     - null
+
+
+Feature Engineering
+---------------------------
 
 .. _technical-indicators:
 
@@ -80,25 +144,31 @@ We also provide 10 market indicators, which are explained below.
      - Turbulence
      - A risk control measure used in FinRL that quantifies extreme asset price fluctuations, useful for handling worst-case market scenarios like the 2007–2008 financial crisis.
 
-Limit Order Book (LOB) data
----------------------------
+Factor mining
+~~~~~~~~~~~~~~~~~~~~~
 
-
-LOB data
-~~~~~~~~~~~~~~~~~
-
-Factor Mining
-~~~~~~~~~~~~~~~~~
-
-
-Financial news data
----------------------------
-FNSPID [1]_
-~~~~~~~~~~~~~~~~~
 
 LLM-Generated Signals
 ~~~~~~~~~~~~~~~~~~~~~
+We can leverage LLMs to extract signals from the news articles. These signals can be used to enhance the trading strategy and improve the performance of the trading agent. The LLM-generated signals include sentiment scores, risk levels, and other relevant information extracted from the financial news.
 
+1. Sentiment scores. LLM assigns a sentiment score of 1 to 5 according to the news, with 1 for negative and 5 for positive.
+
+.. raw:: html
+
+   <div style="background-color:#f0f0f0; padding:12px; border-radius:6px;">
+     <strong>Prompt:</strong><br>
+       You are a financial expert with sentiment analysis and stock recommendation experience. Based on a specific stock, score for range from 1 to 5, where 1 is negative, 2 is somewhat negative, 3 is neutral, 4 is somewhat positive, 5 is positive
+   </div>
+
+2. Risk levels. LLM assigns a risk level of 1 to 5 from the news, with 1 for very low risk and 5 very high risk.
+
+.. raw:: html
+
+   <div style="background-color:#f0f0f0; padding:12px; border-radius:6px;">
+     <strong>Prompt:</strong><br>
+       You are a financial expert specializing in risk assessment. Based on a specific stock, provide a risk score from 1 to 5, where: 1 indicates very low risk, 2 indicates low risk, 3 indicates moderate risk (default if the news lacks any clear indication of risk), 4 indicates high risk, and 5 indicates very high risk.
+   </div>
 
 
 **References**

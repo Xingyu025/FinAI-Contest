@@ -106,7 +106,7 @@ DeepSeek-V3 assigns a sentiment score u of 1 to 5 according to the news, with 1 
 
 Risk levels
 ^^^^^^^^^^^^^^^^
-DeepSeek-V3 assigns a risk level q of 1 to 5 from the news, with 1 for low risk and 5 high risk.
+DeepSeek-V3 assigns a risk level q of 1 to 5 from the news, with 1 for very low risk and 5 very high risk.
 
 .. raw:: html
 
@@ -118,7 +118,7 @@ DeepSeek-V3 assigns a risk level q of 1 to 5 from the news, with 1 for low risk 
 
 OHLCV dataset
 ~~~~~~~~~~~~~~~~~~~~~~~
-In addition, we download the OHLCV data from Yahoo Finance for the same stocks and period. The dataset includes daily open, high, low, close prices, and volume data for each stock. We also include the 10 market indicators through feature engineering, as shown in :ref:`technical-indicators`
+In addition, we download the OHLCV data from Yahoo Finance for the same stocks and period. The dataset includes daily open, high, low, close prices, and volume data for each stock. We also include the 10 market indicators through feature engineering, as shown in :ref:`technical-indicators`.
 
 We combine the OHLCV dataset and LLM-generated signals together:
 

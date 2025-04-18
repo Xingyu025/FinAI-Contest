@@ -2,6 +2,9 @@
 Overview
 =============================
 
+`Contest Website <https://open-finance-lab.github.io/FinRL_Contest_2025/>`_; `Starter Kit <https://github.com/Open-Finance-Lab/FinRL_Contest_2025>`_
+
+
 Financial reinforcement learning (FinRL) [1]_ [2]_ applies reinforcement learning algorithms to financial tasks such as portfolio management, algorithmic trading, and option pricing [3]_ [4]_ [5]_. Recent breakthroughs in large language models (LLMs) are driving open finance, which provides affordable and scalable solutions for customers to make intelligent decisions, enabling personalized financial search and robo-advisors.
 
 Features

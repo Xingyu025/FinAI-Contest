@@ -235,7 +235,7 @@
 </div></section>
 <section id="risk-levels">
 <h4>Risk levels<a class="headerlink" href="#risk-levels" title="Link to this heading"></a></h4>
-<p>DeepSeek-V3 assigns a risk level q of 1 to 5 from the news, with 1 for low risk and 5 high risk.</p>
+<p>DeepSeek-V3 assigns a risk level q of 1 to 5 from the news, with 1 for very low risk and 5 very high risk.</p>
 <div style="background-color:#f0f0f0; padding:12px; border-radius:6px;">
   <strong>Prompt:</strong><br>
     You are a financial expert specializing in risk assessment. Based on a specific stock, provide a risk score from 1 to 5, where: 1 indicates very low risk, 2 indicates low risk, 3 indicates moderate risk (default if the news lacks any clear indication of risk), 4 indicates high risk, and 5 indicates very high risk.
@@ -243,7 +243,7 @@
 </section>
 <section id="ohlcv-dataset">
 <h3>OHLCV dataset<a class="headerlink" href="#ohlcv-dataset" title="Link to this heading"></a></h3>
-<p>In addition, we download the OHLCV data from Yahoo Finance for the same stocks and period. The dataset includes daily open, high, low, close prices, and volume data for each stock. We also include the 10 market indicators through feature engineering, as shown in <a class="reference internal" href="../intro/data.html#technical-indicators"><span class="std std-ref">Feature Engineering</span></a></p>
+<p>In addition, we download the OHLCV data from Yahoo Finance for the same stocks and period. The dataset includes daily open, high, low, close prices, and volume data for each stock. We also include the 10 market indicators through feature engineering, as shown in <a class="reference internal" href="../intro/data.html#technical-indicators"><span class="std std-ref">Feature Engineering</span></a>.</p>
 <p>We combine the OHLCV dataset and LLM-generated signals together:</p>
 <table class="docutils align-default">
 <colgroup>
