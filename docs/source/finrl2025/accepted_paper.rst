@@ -5,6 +5,15 @@ Accepted Papers
 `Parallel Market Environments for FinRL Contests <https://www.cloud-conf.net/datasec/2025/proceedings/pdfs/IDS2025-3SVVEmiJ6JbFRviTl4Otnv/966100a064/966100a064.pdf>`_
     *Keyi Wang (Columbia University, USA), Kairong Xiao (Columbia University, USA), Xiao-Yang Liu Yanglet (Columbia University, USA)*
 
+.. image:: ../image/FinRL_Contest_2025/Paper_Env.png
+   :width: 100%
+   :align: center
+
+.. raw:: html
+
+    <br><br>
+
+
 `HMM-Based Market Regime Detection with RL for Portfolio Management <https://www.cloud-conf.net/datasec/2025/proceedings/pdfs/IDS2025-3SVVEmiJ6JbFRviTl4Otnv/966100a067/966100a067.pdf>`_
     *Jean Ndoutoumou (Numeraxial LLC, NY), Zining Yin (Columbia University, NY), Xiaochang Cheng (New York University, NY)*
 
@@ -109,6 +118,10 @@ Task 4 Open FinLLM Leaderboard -- Digital Regulatory Reporting
 ---------------------------------------------------------------
 `RKEFino1: A Regulation Knowledge-Enhanced Large Language Model <https://www.cloud-conf.net/datasec/2025/proceedings/pdfs/IDS2025-3SVVEmiJ6JbFRviTl4Otnv/966100a049/966100a049.pdf>`_
     *Yan Wang (Yale University, USA), Yueru He (Columbia University, USA), Ruoyu Xiang (New York University, USA), Jeff Zhao (The University of Texas at Austin, USA)*
+
+.. image:: ../image/FinRL_Contest_2025/Paper_1309_O1-Financial.png
+   :width: 100%
+   :align: center
 
 .. raw:: html
 
