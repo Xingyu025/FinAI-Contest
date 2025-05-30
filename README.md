@@ -1,4 +1,4 @@
-# FinRL-Contest Documentation
+# FinAI-Contest Documentation
 
 To contribute to the documentation, please clone this repo.
 
