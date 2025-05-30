@@ -12,9 +12,9 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'FinRL Contest Documentation'
-copyright = '2025, FinRL Contest'
-author = 'FinRL Contest'
+project = 'FinAI Contest Documentation'
+copyright = '2025, SecureFinAI Lab'
+author = 'SecureFinAI Lab'
 release = '1.0'
 
 # -- General configuration ---------------------------------------------------
@@ -55,7 +55,7 @@ html_css_files = [
 html_context = {
     "display_github": True, # Integrate GitHub
     "github_user": "Open-Finance-Lab", # Username
-    "github_repo": "FinRL-Contest", # Repo name
+    "github_repo": "FinAI-Contest", # Repo name
     "github_version": "main", # Version
     "conf_py_path": "/docs/source/", # Path in the checkout to the docs root
 }
