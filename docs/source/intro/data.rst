@@ -42,7 +42,7 @@ Limit Order Book (LOB) data
 
 
 Financial news data - FNSPID [1]_
----------------------------
+-----------------------------------------
 The `Financial News and Stock Price Integration Dataset (FNSPID) <https://huggingface.co/datasets/Zihan1004/FNSPID>`_ is a comprehensive financial news dataset. It contains historical stock prices and over 15 million time-aligned financial news articles related to Nasdaq-listed companies, spanning from 1999 to 2023. 
 
 Here is a preview of the dataset:

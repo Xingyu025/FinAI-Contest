@@ -10,9 +10,11 @@ FinAI Contest Documentation
    `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
    documentation for details.
 
-Financial reinforcement learning (FinRL) applies reinforcement learning algorithms to financial tasks, such as order execution, portfolio management, high-frequency trading, option pricing and hedging, and market making.
+FinAI Contest is a series of contests focusing on applying artificial intelligence in various financial tasks. The contest aims to promote open finance and encourage the development of advanced financial technologies.
 
-From 2023 to 2025, we have organized three FinRL Contests featuring different financial tasks. These tasks allow contestants to participate in various financial tasks and contribute to open finance using state-of-the-art technologies.
+Financial reinforcement learning (FinRL) applies reinforcement learning algorithms to financial tasks, such as order execution, portfolio management, high-frequency trading, option pricing and hedging, and market making. The recent breakthroughs of large language models (LLMs) is driving open finance, which provides affordable and scalable solutions for customers to make intelligent decisions and created personalized financial search and robo-advisors.
+
+From 2023 to 2025, we have organized three FinRL Contests featuring different financial tasks, leveraging reinforcement learning and LLMs. These tasks allow contestants to participate in various financial tasks and contribute to open finance using state-of-the-art technologies.
 
 From FinRL and FinRL-Meta, we select stable market environments to define tasks. We provide diverse datasets, including OHLCV data, limit order books (LOB) data, and financial news. We also provide environments that incorporate LLM-generated signals and support massively parallel simulation. We provide an ensemble learning approach with GPU-optimized parallel environments to mitigate policy instability and address sampling bottleneck. 
 
@@ -46,6 +48,14 @@ FinRL Contest 2023: `Contest Website <https://open-finance-lab.github.io/finrl-c
 
    baseline/market
    baseline/regression
+
+.. toctree::
+   :maxdepth: 2
+   :caption: FinAI Contest 2025
+
+   finai2025/overview
+   finai2025/task1
+   finai2025/task2
 
 .. toctree::
    :maxdepth: 2
