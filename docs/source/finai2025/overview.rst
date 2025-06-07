@@ -38,7 +38,7 @@ Timeline (Tentative)
             - identify data sources for fine-tuning (collect links) 
             - benchmark datasets 
 
-                - CFA exam: focusing only on regulations?
+                - CFA exam
                 - XBRL: select some from existing datasets.
                 - CDM: collaborate with **Yan Wang** to develop the datasets for tagging tasks.
 
