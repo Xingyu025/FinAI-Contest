@@ -38,7 +38,7 @@ Timeline (Tentative)
             - identify data sources for fine-tuning (collect links) 
             - benchmark datasets 
 
-                - CFA exam
+                - CFA mock exam
                 - XBRL: select some from existing datasets.
                 - CDM: collaborate with **Yan Wang** to develop the datasets for tagging tasks.
 
@@ -57,7 +57,7 @@ Timeline (Tentative)
         - Task 2: GPT-4o, Llama, Mistral, DeepSeek-V3 on CDM, XBRL, CFA exam. (need to identify similar model size with participants' models)
 
     - Tutorials and resources (code demo, docs, repos, papers, blogs, etc).
-    - Website and promotion materials. (**Jin Bo**?)
+    - Website and promotion materials. (**Yupeng**?)
 
 07/25: Team Registration Opens. 
 
