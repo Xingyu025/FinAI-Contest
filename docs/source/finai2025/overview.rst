@@ -14,15 +14,14 @@ The FinRL Contest 2025 explores and evaluates the capability of machine learning
 Tasks
 ---------------
 
-The **FinAI Contest 2025** has the following tasks:
+The **FinAI Contest 2025** has the following two tasks:
 
 1. **FinRL-DeepSeek for Crypto Trading**: Develop crypto trading agents by integrating LLM-generated signals in FinRL, using financial news and market data.
 
-2. **FinAgent using Fine-Tuning**: Fine-tune LLMs and develop financial agents to interpret professional language of finance.
+2. **FinAgents in Real Life**: Fine-tune LLMs and develop financial agents for financial analytics.
         
         - **CFA exam**: The CFA (Chartered Financial Analyst) exam is a globally recognized exam for financial analysts. It covers a wide range of financial topics, such as investment, economics, and quantitative methods.
-        - * **BloombergGPT** [1]: Compare the performance of your model with BloombergGPT on its public financial benchmarks.
+        - **BloombergGPT** [1]: Compare the performance of your model with BloombergGPT on its public financial benchmarks.
         - **XBRL**: XBRL (eXtensible Business Reporting Language) is a standard language for electronic communication of business and financial data. It has been widely used in regulatory filings, such as SEC filings.
-        - **CDM**: CDM (Common Domain Model) is a machine-oriented model for managing the lifecycle of financial products and transactions.
 
 .. [1] Shijie Wu, Ozan Irsoy, Steven Lu, Vadim Dabravolski, Mark Dredze, Sebastian Gehrmann, Prabhanjan Kambadur, David Rosenberg, Gideon Mann. BloombergGPT: A Large Language Model for Finance. arXiv: 2303.17564 (2023).
