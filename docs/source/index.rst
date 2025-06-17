@@ -56,6 +56,7 @@ FinRL Contest 2023: `Contest Website <https://open-finance-lab.github.io/finrl-c
    finai2025/overview
    finai2025/task1
    finai2025/task2
+   finai2025/task3
 
 .. toctree::
    :maxdepth: 2
