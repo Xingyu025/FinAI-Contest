@@ -15,7 +15,7 @@ The FinRL Contest 2025 explores and evaluates the capability of machine learning
 Tasks
 ---------------
 
-The **FinAI Contest 2025** has the following two tasks:
+The **FinAI Contest 2025** has the following three tasks:
 
 1. **FinRL-DeepSeek for Crypto Trading**: Develop crypto trading agents by integrating LLM-generated signals in FinRL, using financial news and market data.
 
