@@ -1,8 +1,8 @@
 ==============================================
-Market Index and Mean-Variance Optimization
+Market Index and Classic Methods
 ==============================================
 
-Market indexes and the mean-variance optimization strategy can be used as baselines. They are widely adopted in the financial industry.
+We use market indices and classic methods as baselines in the FinAI contests. They are widely adopted in the financial industry.
 
 Market indexes:
 
@@ -12,9 +12,11 @@ Market indexes:
 
 - **Nasdaq-100**: The Nasdaq-100 is a stock market index consists of 100 of the largest non-financial companies listed on the Nasdaq stock exchange. It is a capitalization-weighted index. The NASDAQ-100 is heavily concentrated in the technology sector but also includes firms from industries such as consumer discretionary, healthcare, communication services, and industrials. Different from the S&P 500, the NASDAQ-100 excludes financial companies such as banks and insurance firms. Different from the DJIA, it offers broader exposure and follows a market cap–weighted methodology instead of price weighting.
 
-Mean-Variance Optimization:
+Classic Methods:
 
-- **Mean-variance optimization**: Mean-variance optimization, as part of Modern Portfolio Theory (MPT) [Markowitz1952]_, constructs portfolios that maximize the expected return for a given level of risk. It uses expected asset returns and covariances to solve an optimization problem. We typically use the past one year's daily price data to calculate expected returns and the covariance matrix. We limit individual stock weights to a maximum of 5%. Mean-variance optimization is a foundational technique in portfolio management and can serve as a classical financial optimization strategy baseline.
-
+- **Mean-Variance Optimization**: Mean-variance optimization, as part of Modern Portfolio Theory (MPT) [Markowitz1952]_, constructs portfolios that maximize the expected return for a given level of risk. It uses expected asset returns and covariances to solve an optimization problem. We typically use the past one year's daily price data to calculate expected returns and the covariance matrix. We limit individual stock weights to a maximum of 5%. Mean-variance optimization is a foundational technique in portfolio management and can serve as a classical financial optimization strategy baseline.
+- **Minimum-Variance Optimization**
+- **Equally Weighted Portfolio**
+- **Buy and Hold**
 
 .. [Markowitz1952] Harry Markowitz. "Portfolio Selection," *Journal of Finance*, 1952.
