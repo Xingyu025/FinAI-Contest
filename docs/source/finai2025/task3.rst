@@ -1,5 +1,5 @@
 =====================================================
-Task 3 DeFi Liquidity Provisioning
+Task 3 FinRL for DeFi
 =====================================================
 
 Task Overview
