@@ -2,7 +2,8 @@
 ML Methods
 ==================
 
-In addition to the market indices and classic methods, we also use several machine learning methods as baselines in the FinAI contests. These methods can serve as benchmarks for model performance in trading tasks.
+We also consider the following conventional machine learning methods as baselines.
+
 
 Linear Regression Model
 ----------------------------
