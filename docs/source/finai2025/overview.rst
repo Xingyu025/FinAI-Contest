@@ -2,6 +2,9 @@
 Overview
 =============================
 
+`Contest Website <https://open-finance-lab.github.io/FinAI_Contest_2025/>`_; `Starter Kit <https://github.com/Open-Finance-Lab/FinAI_Contest_2025>`_
+
+
 As AI continues to advance at a fast pace, more FinAI agents are being developed for the finance sector, such as `FinRL trading agents <https://berylventures.com/spotlights>`_ [1,2,3]_, FinGPT agents [4,5]_ with multimodal capabilities [6]_, and regulatory reporting agents [7]_. The FinAI Contest 2025 encourages the development of open FinAgents based on the frameworks FinRL [2,3]_ and FinGPT [4]_.
 
 The FinAI Contest 2025 explores and evaluates the capability of machine learning methods in finance, with the following features:
