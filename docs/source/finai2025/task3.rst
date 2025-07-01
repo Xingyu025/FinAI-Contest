@@ -28,7 +28,7 @@ Methodology
 Data Processing and Feature Construction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ETH/USDC hourly price series is preprocessed to construct the following state features. This calculation occurs within the custom Gym environment to ensure consistency and stability during training. These core features are preserved across runs, although users are encouraged to augment them with additional indicators if desired.
+The ETH/USDC hourly price series is preprocessed to construct the following state features. This calculation occurs within the custom Gymnasium environment to ensure consistency and stability during training. These core features are preserved across runs, although users are encouraged to augment them with additional indicators if desired.
 
 
 .. list-table:: State Feature Descriptions
@@ -106,7 +106,7 @@ The task is modeled as a discrete-time Markov Decision Process (MDP):
 
 
 - **Environment**:
-  A Gym-compatible environment simulates interaction with a Uniswap v3-like AMM. It uses discrete hourly steps, assumes full observability, and prohibits lookahead. The agent repositions liquidity symmetrically around the current tick, with customizable tick spacing. Rewards are computed in real time using Uniswap v3 pricing formulas.
+  A Gymnasium-compatible environment simulates interaction with a Uniswap v3-like AMM. It uses discrete hourly steps, assumes full observability, and prohibits lookahead. The agent repositions liquidity symmetrically around the current tick, with customizable tick spacing. Rewards are computed in real time using Uniswap v3 pricing formulas.
 
 For more background on how Uniswap v3 and the mechanics of liquidity provisioning work, refer to [2]_.
 
@@ -140,6 +140,7 @@ Agents are evaluated on an out-of-sample test period from January 29 to April 29
 Performance is evaluated based on the **cumulative reward** obtained over the test window defined above. The cumulative reward serves as a proxy for the **risk-adjusted PnL** of the liquidity provider's position.
 
 This reward function aggregates three key components:
+
 - **Fees earned** from providing liquidity within the chosen range;
 - **Gas costs** incurred from repositioning;
 - **Loss-versus-rebalancing (LVR)**, which penalizes adverse price movements when liquidity is not actively managed.
