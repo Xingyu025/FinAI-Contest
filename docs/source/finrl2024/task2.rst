@@ -1,5 +1,5 @@
 =========================================
-Task II: LLM-Engineered Signals with RLMF
+Task 2: LLM-Engineered Signals with RLMF
 =========================================
 
 This task aims to develop LLMs that can generate and engineer effective signals from news by using **Reinforcement Learning from Market Feedback (RLMF)**. By incorporating market feedback in the fine-tuning process, LLMs can learn from and adapt to financial market behaviors.
