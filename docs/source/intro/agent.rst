@@ -6,9 +6,15 @@ In FinRL, the agent is a deep reinforcement learning (DRL) model that learns to 
 
 Supported Libraries
 ---------------------------
-
+- Isaac Gym for massively parallel simulations,
+- OpenAI Gym, MuJoCo, PyBullet, ElegantRL for benchmarking.
 
 Algorithms
 -------------
+FinRL implements the following model-free deep reinforcement learning (DRL) algorithms:
+
+- DDPG, TD3, SAC, PPO, REDQ for continuous actions in single-agent environment,
+- DQN, Double DQN, D3QN for discrete actions in single-agent environment,
+
 
 
