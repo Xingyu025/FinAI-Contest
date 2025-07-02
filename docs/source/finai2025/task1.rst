@@ -21,7 +21,7 @@ We provide the second-level Limit Order Book (LOB) data and Bitcoin (BTC) nwes f
 
 Limit Order Book (LOB) Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-We provide the second level LOB data of BTC, which is sourced form `Kaggle <https://www.kaggle.com/datasets/martinsn/high-frequency-crypto-limit-order-book-data?resource=download&select=BTC_1sec.csv>`_. Some of important columns represent:
+We provide the second level LOB data of BTC. Some of important columns represent:
 
 .. list-table:: LOB Data Columns Description
    :header-rows: 1
@@ -138,7 +138,7 @@ We use the following prompt:
 
      <p>You must provide your analysis in a structured JSON format. The JSON object must contain the following keys:</p>
      <ul>
-       <li>"risk_score": An integer from 1 (extremely negative) to 5 (extremely positive), where 3 means neutral.</li>
+       <li>"risk_score": An integer from 1 (low risk) to 5 (high risk).</li>
        <li>"confidence_score_risk": A float between 0.0 and 1.0, representing your confidence in the risk analysis.</li>
        <li>"reasoning_risk": A concise, one-sentence explanation for your risk assessment.</li>
      </ul>
@@ -184,7 +184,7 @@ After getting the signals, confidence scores and reasoning, we add them to the n
      - 3
      - 0.85
      - The article provides a balanced view on analyzing crypto tokens, highlighting both opportunities and risks without leaning heavily towards positive or negative sentiment.
-     - 2
+     - 4
      - 0.75
      - The article highlights the prevalence of scams and the challenge of identifying legitimate investments in the vast and unregulated crypto market, indicating a high risk for investors.
 
@@ -196,7 +196,7 @@ After getting the signals, confidence scores and reasoning, we add them to the n
      - 4
      - 0.90
      - The article highlights the expansion of accessible bitcoin purchasing options in Florida, indicating positive growth and adoption of cryptocurrency.
-     - 4
+     - 2
      - 0.75
      - The expansion of bitcoin-enabled kiosks in Florida increases accessibility and convenience for purchasing bitcoin, potentially boosting adoption and positive market sentiment.
 
