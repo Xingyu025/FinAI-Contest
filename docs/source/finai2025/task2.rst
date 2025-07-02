@@ -4,7 +4,7 @@ Task 2 FinGPT Agents in Real Life
 
 Task Overview
 ====================================
-This task is to fine-tune LLMs and develop financial agents for financial analytics, including the CFA exam, BloombergGPT’s public benchmark tasks, and XBRL tasks. We encourage participants to use LoRA and reinforcement fine-tuning.
+This task is to fine-tune LLMs and develop financial agents for financial analytics, including the CFA exam, BloombergGPT's public benchmark tasks, and XBRL tasks. We encourage participants to use LoRA and reinforcement fine-tuning.
 
 - CFA exam: The CFA (Chartered Financial Analyst) exam is a globally recognized exam for financial analysts. It covers a wide range of financial topics, such as investment, economics, and quantitative methods.
 - BloombergGPT: Compare the performance of your model with BloombergGPT on its public financial benchmarks.
@@ -38,7 +38,7 @@ Question Set Statistics
      - 3
      - 180
      - 540
-     - Level I has multiple-choice questions to test a candidate’s understanding of core concepts in finance, investment tools, and ethical and professional standards.
+     - Level I has multiple-choice questions to test a candidate's understanding of core concepts in finance, investment tools, and ethical and professional standards.
    * - Level II
      - 2
      - 88
@@ -111,10 +111,10 @@ Question Set Examples
      - **Choice 2**
      - **Choice 3**
      - **Answer**
-   * - Sammy Sneadle, CFA, is the founder and portfolio manager of the Everglades Fund. In its first year, the fund generated a return of 30 percent. Building on the fund’s performance, Sneadle created new marketing materials that showed the fund’s gross 1-year return, as well as the 3 and 5-year returns, which he calculated by using back-testedperformance information. As the marketing material is used only for presentations to institutional clients, Sneadle does not mention the inclusion of back-tested data. According to the Standards of Practice Handbook, how did Sneadle violate CFA Institute Standards of Professional Conduct?
+   * - Sammy Sneadle, CFA, is the founder and portfolio manager of the Everglades Fund. In its first year, the fund generated a return of 30 percent. Building on the fund's performance, Sneadle created new marketing materials that showed the fund's gross 1-year return, as well as the 3 and 5-year returns, which he calculated by using back-testedperformance information. As the marketing material is used only for presentations to institutional clients, Sneadle does not mention the inclusion of back-tested data. According to the Standards of Practice Handbook, how did Sneadle violate CFA Institute Standards of Professional Conduct?
      - A. He did not disclose the use of back-tested data.
-     - B. He failed to deduct all fees and expenses before calculating the fund’s track record.
-     - C. The marketing materials only include the Everglades Fund’s performance and are not a weighted composite of similar portfolios.
+     - B. He failed to deduct all fees and expenses before calculating the fund's track record.
+     - C. The marketing materials only include the Everglades Fund's performance and are not a weighted composite of similar portfolios.
      - A. He did not disclose the use of back-tested data.
 
 **CFA Exam Level II Example**
@@ -141,7 +141,7 @@ Question Set Examples
 Please view `FinLoRA Documentation Financial Certification Tasks page <https://finlora-docs.readthedocs.io/en/latest/tasks/certification_tasks.html>`__ for more examples and details.
 
 
-BloombergGPT [1]_ Public Benchmark Datasets
+BloombergGPT [2]_ Public Benchmark Datasets
 ------------------------------------------------------------
 
 BloombergGPT has released a set of public benchmark datasets for financial tasks, which we will use to evaluate the performance of your FinGPT agents. These datasets cover various financial tasks, including sentiment analysis, named entity recognition, math calculation, and so on.
@@ -159,31 +159,31 @@ Question Set Statistics
      - **# of shots**
      - **Dataset Link**
      - **Description**
-   * - Financial Phrasebank Dataset (FPB) [2]
+   * - Financial Phrasebank Dataset (FPB) [3]
      - 150
      - F1
      - 5
      - `Link <https://huggingface.co/datasets/ChanceFocus/en-fpb>`__
      - The Financial Phrasebank Dataset includes a sentiment classification task on sentences from financial news. Any news that could benefit/hurt an investor is considered positive/negative and neutral otherwise.
-   * - FiQA SA [3]
+   * - FiQA SA [4]
      - 150
      - F1
      - 5
      - `Link <https://huggingface.co/datasets/ChanceFocus/flare-fiqasa>`__
      - This is a sentiment analysis task to predict the aspect-specific sentiment in English financial news and microblog headlines, from the 2018 challenge on financial question answering and opinion mining.
-   * - Headline [4]
+   * - Headline [5]
      - 150
      - F1
      - 5
      - `Link <https://huggingface.co/datasets/FinGPT/fingpt-headline-cls>`__
      - This is a binary classification task on whether a gold commodity news headline includes specific information.
-   * - NER [5]
+   * - NER [6]
      - 150
      - F1
      - 20
      - `Link <https://huggingface.co/datasets/FinGPT/fingpt-ner-cls>`__
      - Named entity recognition task on financial agreements filed with the SEC for credit risk assessment.
-   * - ConvFinQA [6]
+   * - ConvFinQA [7]
      - 150
      - Match Accuracy
      - /
@@ -329,12 +329,12 @@ Question Set Statistics
      - Accuracy
      - `Link <https://huggingface.co/datasets/wangd12/XBRL_analysis>`__
      - Substitute numeric values into a constructed formula and compute the result.
-   * - Financial Numeric Identification (FinNI) [7]
+   * - Financial Numeric Identification (FinNI) [8]
      - 200
      - F1
      - `Link <https://github.com/The-FinAI/FinTagging/tree/main/subdata>`__
      - Identify financial values in documents and assign a coarse-grained data type: Fact and Type components of a {Fact, Type, Tag} triplet.
-   * - Financial Concept Linking (FinCL) [7]
+   * - Financial Concept Linking (FinCL) [8]
      - 500
      - Accuracy
      - `Link <https://github.com/The-FinAI/FinTagging/tree/main/subdata>`__
@@ -355,11 +355,66 @@ For the first four tasks, please view `FinLoRA Documentation Financial Statement
 FinLoRA
 =====================================
 
-Please view `FinLoRA Documentation <https://finlora-docs.readthedocs.io/en/latest/>`__ for details on how to fine-tune LLMs using LoRA for financial tasks.
+FinLoRA [1]_ provides detailed documentation and reference implementations for fine-tuning open LLMs on financial tasks with Low-Rank Adaptation (LoRA). Participants may find its guidelines and codebase helpful for reproducing the strong baselines reported below.
 
 Baseline Performance
 =====================================
 
+.. list-table:: Baseline CFA Exam Performance (accuracy %)
+   :header-rows: 1
+   :widths: 20 12 12
 
+   * - **Model**
+     - **Level I**
+     - **Level II**
+   * - GPT-4o
+     - 88.1
+     - 76.7
+   * - GPT-4
+     - 74.6
+     - 61.4
+   * - GPT-3.5 Turbo
+     - 63.0
+     - 47.6
 
-.. [1] Shijie Wu, Ozan Irsoy, Steven Lu, Vadim Dabravolski, Mark Dredze, Sebastian Gehrmann, Prabhanjan Kambadur, David Rosenberg, Gideon Mann. BloombergGPT: A Large Language Model for Finance. arXiv: 2303.17564, 2023.
+.. list-table:: Baseline XBRL Task Performance (higher is better)
+   :header-rows: 1
+   :widths: 20 12 12 12 12
+
+   * - **Model**
+     - **Tag Extraction**
+     - **Value Extraction**
+     - **Formula Construction**
+     - **Formula Calculation**
+   * - GPT-4o
+     - 81.60
+     - 97.01
+     - 79.76
+     - 83.59
+   * - DeepSeek V3
+     - 85.03
+     - 98.01
+     - 22.75
+     - 85.99
+   * - Llama 3 70B
+     - 69.64
+     - 88.19
+     - 59.28
+     - 77.49
+   * - Gemini 2.0 FL
+     - 80.27
+     - 98.02
+     - 61.90
+     - 53.57
+
+References
+=====================================
+
+.. [1] Wang, D., Patel, J., Zha, D., Yang, S. Y., & Liu, X. Y. (2025). *FinLoRA: Benchmarking LoRA Methods for Fine-Tuning LLMs on Financial Datasets*. arXiv:2505.19819.
+.. [2] Shijie Wu, Ozan Irsoy, Steven Lu, Vadim Dabravolski, Mark Dredze, Sebastian Gehrmann, Prabhanjan Kambadur, David Rosenberg, Gideon Mann. *BloombergGPT: A Large Language Model for Finance*. arXiv:2303.17564 (2023).
+.. [3] Malo, P., Lu, H., Ahlgren, M., Rönnqvist, S., & Nyberg, P. (2014). *FinancialPhraseBank-v1.0*. SSRN 2512146.  https://ssrn.com/abstract=2512146
+.. [4] Sinha, A., Joglekar, M., & Murphy, F. (2018). *FiQA: Financial Opinion Mining and Question Answering*. arXiv:1809.09431.
+.. [5] FinGPT. (2023). *FinGPT Headline Classification* (HuggingFace Dataset). https://huggingface.co/datasets/FinGPT/fingpt-headline-cls
+.. [6] FinGPT. (2023). *FinGPT Named Entity Recognition* (HuggingFace Dataset). https://huggingface.co/datasets/FinGPT/fingpt-ner-cls
+.. [7] Chen, Z., Li, S., Smiley, C., Ma, Z., Shah, S., & Wang, W. Y. (2022). *ConvFinQA: Exploring the Chain of Numerical Reasoning in Conversational Finance Question Answering*. arXiv:2210.03849.
+.. [8] Wang, Y., Ren, Y., Qian, L., Peng, X., Wang, K., Han, Y., ... & Xie, Q. (2025). *FinTagging: An LLM-ready Benchmark for Extracting and Structuring Financial Information*. arXiv:2505.20650.
