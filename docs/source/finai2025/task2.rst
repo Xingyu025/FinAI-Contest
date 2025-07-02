@@ -355,7 +355,7 @@ For the first four tasks, please view `FinLoRA Documentation Financial Statement
 FinLoRA
 =====================================
 
-FinLoRA [1]_ provides detailed documentation and reference implementations for fine-tuning open LLMs on financial tasks with Low-Rank Adaptation (LoRA). Participants may find its guidelines and codebase helpful for reproducing the strong baselines reported below.
+FinLoRA [1]_ provides detailed `documentation <https://finlora-docs.readthedocs.io/en/latest/>`__ and reference implementations for fine-tuning open LLMs on financial tasks with Low-Rank Adaptation (LoRA). Participants may find its guidelines and codebase helpful for reproducing the strong baselines reported below.
 
 Baseline Performance
 =====================================
