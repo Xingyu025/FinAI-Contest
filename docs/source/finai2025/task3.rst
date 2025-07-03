@@ -18,7 +18,7 @@ Starter Kit
 
 Data
 ----------------
-The environment uses a single hourly price time series: `data_price_uni_h_time.csv`, which contains ETH/USDC price data from May 5, 2021 to April 29, 2024. All state variables are derived from this series. No additional data (e.g., volumes, centralized order book quotes or prices) is used in the baseline.
+The environment uses a single hourly price time series: `data_price_uni_h_time.csv`, which contains ETH/USDC price data from May 5, 2021 to January 29, 2024. The final evaluation period from January 29 to April 29, 2024 is withheld. All state variables are derived from this series. No additional data (e.g., volumes, centralized order book quotes or prices) is used in the baseline.
 
 Participants may optionally expand the state with external data, provided no future information is used and environment logic remains unaltered.
 
@@ -44,7 +44,7 @@ The ETH/USDC hourly price series is preprocessed to construct the following stat
 
    * - ``tick_index``
      - Log-scaled tick index computed from price 
-     - Computed in custom environment according [1]_
+     - Computed in custom environment according [1]
 
    * - ``volatility``
      - Exponentially weighted std. dev. of log returns
@@ -101,14 +101,14 @@ The task is modeled as a discrete-time Markov Decision Process (MDP):
   where:
 
   - ``fee_t``: Fees are collected only when the price remains within the selected range.
-  - ``lvr_t``: Liquidity Value at Risk, penalizing capital inefficiency, scaled by volatility [3]_.
+  - ``lvr_t``: Liquidity Value at Risk, penalizing capital inefficiency, scaled by volatility [3].
   - ``gas_fee_t``: A fixed gas fee (default $5) incurred at each repositioning action.
 
 
 - **Environment**:
   A Gymnasium-compatible environment simulates interaction with a Uniswap v3-like AMM. It uses discrete hourly steps, assumes full observability, and prohibits lookahead. The agent repositions liquidity symmetrically around the current tick, with customizable tick spacing. Rewards are computed in real time using Uniswap v3 pricing formulas.
 
-For more background on how Uniswap v3 and the mechanics of liquidity provisioning work, refer to [2]_.
+For more background on how Uniswap v3 and the mechanics of liquidity provisioning work, refer to [2].
 
 
 Additional Mechanisms
@@ -128,14 +128,14 @@ RL Algorithm
 
 We include a baseline agent trained using the **Proximal Policy Optimization (PPO)** algorithm, implemented via `stable-baselines3 <https://github.com/DLR-RM/stable-baselines3>`_.
 
-PPO is a widely adopted reinforcement learning algorithm known for its stability and sample efficiency in both discrete and continuous control problems. We selected PPO as it is considered a state-of-the-art method in modern reinforcement learning pipelines, including recent advances in Reinforcement Learning from Human Feedback (RLHF) for language model fine-tuning [4]_. The original formulation and theoretical foundations of PPO are introduced in [5]_.
+PPO is a widely adopted reinforcement learning algorithm known for its stability and sample efficiency in both discrete and continuous control problems. We selected PPO as it is considered a state-of-the-art method in modern reinforcement learning pipelines, including recent advances in Reinforcement Learning from Human Feedback (RLHF) for language model fine-tuning [4]. The original formulation and theoretical foundations of PPO are introduced in [5].
 
 All PPO hyperparameters, architectural choices, and reward weights can be adjusted through the ``uniswap_rl_param_1108.yaml`` configuration file provided in the repository.
 
 
 Evaluation
 ----------------
-Agents are evaluated on an out-of-sample test period from January 29 to April 29, 2024.
+Participants are free to use their preferred cross-validation strategies but must avoid using future information beyond the dataset cutoff. Final evaluation will be performed on a private, unreleased test set from January 29 to April 29, 2024.
 
 Performance is evaluated based on the **cumulative reward** obtained over the test window defined above. The cumulative reward serves as a proxy for the **risk-adjusted PnL** of the liquidity provider's position.
 
@@ -145,7 +145,7 @@ This reward function aggregates three key components:
 - **Gas costs** incurred from repositioning;
 - **Loss-versus-rebalancing (LVR)**, which penalizes adverse price movements when liquidity is not actively managed.
 
-LVR accounts for both **impermanent loss** and the **opportunity cost** of not passively holding the assets (i.e., as on a centralized exchange). For further details on the concept and implications of LVR, refer to [3]_.
+LVR accounts for both **impermanent loss** and the **opportunity cost** of not passively holding the assets (i.e., as on a centralized exchange). For further details on the concept and implications of LVR, refer to [3].
 
 Baseline Performance
 ----------------------------
@@ -154,7 +154,7 @@ The baseline is a passive liquidity provider that rebalances every 500 timesteps
 
 Performance metrics for the baseline are computed using the ``uniswap_test_bm.ipynb`` notebook, which evaluates the strategy on a rolling test window. 
 
-Participants are expected to outperform this benchmark by training RL agents using the ``uniswap_test.py`` script, which relies on the custom environment implemented in the ``custom_env_folder``.
+Participants are expected to outperform this benchmark by training RL agents using the ``uniswap_test.py`` script, which relies on the custom environment implemented in the ``custom_env_folder``. Participants must not modify the reward function or gas cost settings.
 
 
 Citation
@@ -171,12 +171,13 @@ Please cite the original paper:
 References
 ----------------------------
 
-.. [1] H. Adams, N. Zinsmeister, M. Salem, R. Keefer, and D. Robinson. *Uniswap v3 Core*. Tech. rep., Uniswap, 2021.
+[1] H. Adams, N. Zinsmeister, M. Salem, R. Keefer, and D. Robinson. *Uniswap v3 Core*. Tech. rep., Uniswap, 2021.
 
-.. [2] M. Ottina, P. J. Steffensen, and J. Kristensen. *Automated Market Makers: A Practical Guide to Decentralized Exchanges and Cryptocurrency Trading*. Springer, 2023.
+[2] M. Ottina, P. J. Steffensen, and J. Kristensen. *Automated Market Makers: A Practical Guide to Decentralized Exchanges and Cryptocurrency Trading*. Springer, 2023.
 
-.. [3] Jason Milionis, Ciamac C. Moallemi, Tim Roughgarden, and Anthony Lee Zhang. *Automated Market Making and Loss-Versus-Rebalancing*, arXiv preprint arXiv:2208.06046, 2022.
+[3] Jason Milionis, Ciamac C. Moallemi, Tim Roughgarden, and Anthony Lee Zhang. *Automated Market Making and Loss-Versus-Rebalancing*, arXiv preprint arXiv:2208.06046, 2022.
 
-.. [4] L. Ouyang et al., "Training language models to follow instructions with human feedback", *Advances in Neural Information Processing Systems*, vol. 35, pp. 27730–27744, 2022.
+[4] L. Ouyang et al., "Training language models to follow instructions with human feedback", *Advances in Neural Information Processing Systems*, vol. 35, pp. 27730–27744, 2022.
 
-.. [5] J. Schulman et al., "Proximal Policy Optimization Algorithms", arXiv preprint arXiv:1707.063
+[5] J. Schulman et al., "Proximal Policy Optimization Algorithms", arXiv preprint arXiv:1707.063
+
