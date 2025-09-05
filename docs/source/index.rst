@@ -51,6 +51,15 @@ FinRL Contest 2023: `Contest Website <https://open-finance-lab.github.io/finrl-c
 
 .. toctree::
    :maxdepth: 2
+   :caption: SecureFinAI Contest 2025
+
+   securefinai2025/overview
+   securefinai2025/task1
+   securefinai2025/task2
+   securefinai2025/task3
+
+.. toctree::
+   :maxdepth: 2
    :caption: FinAI Contest 2025
 
    finai2025/overview
