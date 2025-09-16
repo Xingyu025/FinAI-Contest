@@ -1,0 +1,12 @@
+#python cache files
+finai_contest/__pycache__
+finai_contest/env_stock_trading/__pycache__
+
+#pipeline saved results
+finai_contest/pipeline/results
+finai_contest/pipeline/trained_models
+finai_contest/pipeline/data
+finai_contest/pipeline/results_csv
+
+#build files
+docs/build
