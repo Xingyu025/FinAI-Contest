@@ -4,11 +4,12 @@ In this project, we organize current open-source market environments, and evalua
 ## Stock Market Evaluation Pipeline Setting
 ### Data
 
-For evaluation of stock market environments, we use yahooDownloader from FinRL, and achieve daily data from YahooFinance.
+For stock market environments, we use yahooDownloader from FinRL to achieve daily data from YahooFinance. Information can be found in the link.
 https://finrl.readthedocs.io/en/latest/finrl_meta/Data_layer.html
 
 ### Performance metrics
 
+We use the following metrics to evaluate trading performance.
 - Cumulative Reward: Percentage gain over the entire trading period
 - Annualized Return: Average annual rate of return
 - Annualized Volatility: How much return fluctuates annually
@@ -19,6 +20,8 @@ Definition can be found in the FinRL documentation
 https://finrl.readthedocs.io/en/latest/finrl_meta/Benchmark.html
 
 ### Baselines
+
+The following baselines are used for comparisons
 - Dow Jones Industrial Average (DJIA) index: Stock market index for 30 prominent US companies on stock exchange
 - Mean-variance strategy: Balances low risk and high reward
 - Equal-weight strategy: Equal weight assigned to each asset.
@@ -28,11 +31,12 @@ https://finrl.readthedocs.io/en/latest/finrl_meta/Benchmark.html
 
 ### Steps to organize and evaluate an environment
 #### 1. Run Orginal Code
-run provided example tests in the project, plug in the same data from yahoofinance, and collect the same performance metrics
+Run provided example tests in the project, plug in the same data from yahoofinance, and collect account values as results for comparison.
+
 #### 2. Reproduce in our pipeline
-plug in the environment to our pipeline, and collect results. Compare with 1. This serves to ensure the consistency of our reproduction with the original code. 
+Plug in the environment to our pipelines. Compare with results of the original code. This serves to ensure the consistency of our reproduction with the original code. Then, compare the trading performance with the baselines on unified performance metrics.
 #### 3. Standardize the environment
-Refactor the code for the environment to maintain the same state, action, reward design, but follows the standard format, including method design (name, arguments, returns) and parameter design and naming. The environment should follow the standard Gymnasium-Style. 
+Refactor the code for the environment to maintain the same state, action, reward design, following the standard format, including method design (name, arguments, returns) and parameter design and naming. The environment should follow the standard Gymnasium-Style. 
 
 ### Setting up the pipeline
 1. Create your own fork of the Repository
