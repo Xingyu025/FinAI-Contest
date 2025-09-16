@@ -67,11 +67,13 @@ python -m pip install --upgrade pip setuptools wheel
 pip install jupyter ipykernel
 python -m ipykernel install --user --name=proj-env --display-name "Python (proj-env)"
 ```
-
 Select the Kernel you just created
 ![alt text](image-2.png)
+
 4. Try running the first notebook 1_Data.ipynb\
 https://github.com/Open-Finance-Lab/FinAI-Contest/tree/main/finai_contest/pipeline
+
+5. To contribute, commit to your own fork, and submit a pull request(PR)
 
 ## Stock Market Environments
 
