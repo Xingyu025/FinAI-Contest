@@ -1,3 +1,5 @@
+# Adapted from FinRL (https://github.com/AI4Finance-Foundation/FinRL-Meta/blob/master/meta/env_stock_trading/env_stock_trading.py)
+
 from __future__ import annotations
 
 from typing import List

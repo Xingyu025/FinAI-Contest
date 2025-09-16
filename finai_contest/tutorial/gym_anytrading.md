@@ -38,8 +38,7 @@ Refactor the code for the environment to maintain the same state, action, reward
 ### Gym-anytrading
  https://github.com/AminHP/gym-anytrading
 
-1. Install following installation instructions
-2. 
+
 
 
 
