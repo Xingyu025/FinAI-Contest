@@ -31,12 +31,12 @@ https://finrl.readthedocs.io/en/latest/finrl_meta/Benchmark.html
 
 ### Steps to organize and evaluate an environment
 #### 1. Run Orginal Code
-Run provided example tests in the project, plug in the same data from yahoofinance, and collect account values as results for comparison.
+Run the project’s reference scripts/notebooks on the same Yahoo Finance data, and collect equity curve as results for comparison.
 
 #### 2. Reproduce in our pipeline
-Plug in the environment to our pipelines. Compare with results of the original code. This serves to ensure the consistency of our reproduction with the original code. Then, compare the trading performance with the baselines on unified performance metrics.
+Integrate the environment into our pipelines. Compare obtained results with results from the original code. This ensures the consistency of our reproduction with the original code. Then, compare the trading performance with the baselines on unified performance metrics.
 #### 3. Standardize the environment
-Refactor the code for the environment to maintain the same state, action, reward design, following the standard format, including method design (name, arguments, returns) and parameter design and naming. The environment should follow the standard Gymnasium-Style. 
+Refactor to follow the standard Gymnasium-Style, with unified method design (name, arguments, returns) and parameter design and naming, while maintaining the same state, action, reward design.
 
 ### Setting up the pipeline
 1. Create your own fork of the Repository
