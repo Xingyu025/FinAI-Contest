@@ -7,6 +7,7 @@ finai_contest/pipeline/results
 finai_contest/pipeline/trained_models
 finai_contest/pipeline/data
 finai_contest/pipeline/results_csv
+finai_contest/pipeline/original_scripts/results
 
 #build files
 docs/build
