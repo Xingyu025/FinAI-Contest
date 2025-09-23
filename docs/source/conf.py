@@ -31,8 +31,10 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx_rtd_theme",
     "nbsphinx",
-    "nbsphinx_link"
+    "nbsphinx_link",
 ]
+
+templates_path = ['_templates']
 
 master_doc = "index"
 
