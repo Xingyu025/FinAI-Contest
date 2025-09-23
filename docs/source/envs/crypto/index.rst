@@ -1,5 +1,5 @@
-Crypto Market Environments
-=========================
+Environments for Crypto Trading Task
+====================================
 
 .. toctree::
    :maxdepth: 1

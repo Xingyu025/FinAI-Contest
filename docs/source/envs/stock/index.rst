@@ -1,5 +1,5 @@
-Stock Market Environments
-=========================
+Environments for Stock Trading Task
+===================================
 
 .. toctree::
    :maxdepth: 1
