@@ -208,8 +208,8 @@ class StockTradingEnv_FinRLMeta(gym.Env):
             Executed number of shares sold (≥ 0).
         """
         def _do_sell_normal() -> int:
-            # Check tradability flag in indicators block
-            if self.state[index + 2 * self.stock_dim + 1] is not True:
+            #Check if stock position is positive which means it is tradable
+            if self.state[index + 1] > 0:
                 if self.state[index + self.stock_dim + 1] > 0:
                     sell_num_shares = min(
                         abs(action), self.state[index + self.stock_dim + 1]
@@ -230,6 +230,7 @@ class StockTradingEnv_FinRLMeta(gym.Env):
                 else:
                     sell_num_shares = 0
             else:
+                print("not tradable")
                 sell_num_shares = 0
             return sell_num_shares
 
@@ -271,7 +272,8 @@ class StockTradingEnv_FinRLMeta(gym.Env):
             Executed number of shares bought (≥ 0).
         """
         def _do_buy() -> int:
-            if self.state[index + 2 * self.stock_dim + 1] is not True:
+            #Check if stock position is positive which means it is tradable
+            if self.state[index + 1] > 0:
                 # integer shares we can afford including fees
                 available_amount = self.state[0] // (
                     self.state[index + 1] * (1 + self.buy_cost_pct[index])
