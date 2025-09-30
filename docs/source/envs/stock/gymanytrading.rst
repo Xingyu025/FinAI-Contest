@@ -3,20 +3,23 @@ StockTradingEnv_gym_anytrading
 Action Space
 ------------
 The action space is discrete, with two actions:
+
 - 0 : Sell 
 - 1 : Buy
 
-State Space
------------
+Observation Space
+-----------------
 
 The state space consists of the following components:
 
 - **Account balance**: 1 element
-- **Stock prices**: ``stock_dim`` elements
-- **Holding positions**: ``stock_dim`` elements
-- **Feature vector**: ``I × stock_dim`` elements (``I`` features per asset)
+- **Stock price**: 1 element
+- **Holding position**: 1 element
+- **Price difference**: 1 element
 
-Thus, the total state dimension is ``1 + (I + 2) × stock_dim``.
+Each observation contains a rolling history of these elements over the most recent ``window_size`` time steps.
+
+Thus, the total observation space dimension is ``4*window_size``.
 
 Transition Dynamics
 -------------------
@@ -29,9 +32,9 @@ Initial State
 At the start of each episode:
 
 - **Account balance** is initialized to ``1,000,000``.
-- **Holding positions** are initialized to ``0`` for all assets.
-- **Stock prices** are set to the prices from the first trading day.
-- **Feature vector** is initialized using the feature values for the first day.
+- **Holding position** is initialized to ``0``.
+- **Stock price** is set to the price from the first trading day.
+- **Price difference** is initialized to 0.
 
 Ending Condition
 ----------------

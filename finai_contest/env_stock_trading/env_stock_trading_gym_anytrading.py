@@ -158,11 +158,10 @@ class StockTradingEnv_gym_anytrading(gym.Env):
         # Actions: 0 = sell/close long, 1 = buy/open long
         self.action_space = gym.spaces.MultiDiscrete([2] * stock_dim)
 
-        # Base flat state = [cash] + [price] + [position] + [techs...]
-        self._base_obs_len = 1 + self.stock_dim + self.stock_dim + len(self.tech_indicator_list)
+        # Base flat state = [cash] + [price] + [position] + [price_diff]
+        self._base_obs_len = 1 + self.stock_dim + self.stock_dim + self.stock_dim
         obs_len = self.window_size * self._base_obs_len
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(obs_len,))
-
         self.position = [0] * self.stock_dim  # 0=flat/short, 1=long
 
         self.data = self.df.loc[self.day, :]
@@ -335,14 +334,14 @@ class StockTradingEnv_gym_anytrading(gym.Env):
         # SELL (close longs)
         for i in sell_hits:
             qty = min(self.hmax, self.state[1 + self.stock_dim])
-            traded = self._sell_stock(i, int(qty))
+            traded = self._sell_stock(i, qty)
             executed[i] = -traded
             self.position[i] = 0
 
         # BUY (open longs)
         for i in buy_hits:
             qty = self.hmax
-            traded = self._buy_stock(i, int(qty))
+            traded = self._buy_stock(i, qty)
             executed[i] = traded
             self.position[i] = 1
 
@@ -439,19 +438,24 @@ class StockTradingEnv_gym_anytrading(gym.Env):
             Flat state vector for the current day.
         """
         price = float(self.data["close"])
+        if self.day > 0:
+            prev_price = float(self.df.loc[self.day - 1, "close"])
+            price_diff = price - prev_price
+        else:
+            price_diff = 0.0  # no previous day
         if self.initial:
             state = (
                 [self.initial_amount]
                 + [price]
                 + self.num_stock_shares
-                + [float(self.data[t]) for t in self.tech_indicator_list]
+                + [price_diff]
             )
         else:
             state = (
                 [self.previous_state[0]]
                 + [price]
                 + self.previous_state[(self.stock_dim + 1) : (self.stock_dim * 2 + 1)]
-                + [float(self.data[t]) for t in self.tech_indicator_list]
+                + [price_diff]
             )
         return state
 
@@ -464,11 +468,16 @@ class StockTradingEnv_gym_anytrading(gym.Env):
             Flat state vector for the next day.
         """
         price = float(self.data["close"])
+        if self.day > 0:
+            prev_price = float(self.df.loc[self.day - 1, "close"])
+            price_diff = price - prev_price
+        else:
+            price_diff = 0.0  # no previous day
         state = (
             [self.state[0]]
             + [price]
             + list(self.state[(self.stock_dim + 1) : (self.stock_dim * 2 + 1)])
-            + [float(self.data[t]) for t in self.tech_indicator_list]
+            + [price_diff]
         )
         return state
 
