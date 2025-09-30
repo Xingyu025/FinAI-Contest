@@ -2,7 +2,7 @@ StockTradingEnv_gym_anytrading
 ==============================
 Action Space
 ------------
-The action space is a ``Discrete Space`` with two actions 0 and 1.
+The action space is discrete, with two actions:
 - 0 : Sell 
 - 1 : Buy
 
