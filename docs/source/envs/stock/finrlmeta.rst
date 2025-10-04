@@ -25,7 +25,7 @@ Thus, the total state dimension is ``1 + (I + 2) × stock_dim``.
 Transition Dynamics
 -------------------
 
-At each time step ``t``, the environment performs the following updates:
+At each time step, the environment performs the following updates:
 
 1. **Scale and Discretize Actions**
 

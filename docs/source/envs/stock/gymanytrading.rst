@@ -10,19 +10,21 @@ The action space is discrete, with two actions:
 Observation Space
 -----------------
 
-The state space consists of the following components:
+The observation space consists of the following components:
 
-- **Account balance**: 1 element
 - **Stock price**: 1 element
-- **Holding position**: 1 element
 - **Price difference**: 1 element
 
 Each observation contains a rolling history of these elements over the most recent ``window_size`` time steps.
 
-Thus, the total observation space dimension is ``4*window_size``.
+Thus, the total observation space dimension is ``2*window_size``.
 
 Transition Dynamics
 -------------------
+
+At each time step, the environment performs the following updates:
+
+
 Reward Design
 -------------
 The goal is to maximize the gain in asset value, thus the reward is defined as the change in asset value.
