@@ -48,14 +48,14 @@ At each timestep, the environment performs the following updates:
       acts = np.asarray(actions, dtype=int).reshape(-1)
       pos  = np.asarray(self.position, dtype=int).reshape(-1)
 
-2. **Trade Resolution (all-out sells, max-affordable buys)**
+2. **Execute Trades**
 
    We resolve the intended transitions into two disjoint sets:
 
    .. code-block:: python
 
-      sell_hits = np.where((acts == 0) & (pos == 1))[0]  # close longs
-      buy_hits  = np.where((acts == 1) & (pos == 0))[0]  # open longs
+      sell_hits = np.where((acts == 0) & (pos == 1))[0]
+      buy_hits  = np.where((acts == 1) & (pos == 0))[0]
 
    - **BUY (open long)** — from short:
 
