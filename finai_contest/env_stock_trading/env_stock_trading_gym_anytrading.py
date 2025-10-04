@@ -328,7 +328,7 @@ class StockTradingEnv_gym_anytrading(gym.Env):
         begin_total_asset = self._total_asset(self.state)
 
         sell_hits = np.where((acts == 0) & (pos == 1))[0]  # close longs
-        buy_hits = np.where((acts == 1) & (pos == 0))[0]   # open longs
+        buy_hits = np.where((acts == 1) & (pos == 0))[0]
 
         executed = np.zeros_like(acts, dtype=int)
         
