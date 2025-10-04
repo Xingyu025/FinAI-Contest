@@ -15,17 +15,17 @@ State Space
 -----------
 The state space consists of the following components:
 
-- **Account balance**: 1 element
-- **Stock prices**: ``stock_dim`` elements
-- **Holding positions**: ``stock_dim`` elements
-- **Feature vector**: ``I × stock_dim`` elements (``I`` features per asset)
+- **Account balance** (1 element): current account balance
+- **Stock prices** (``stock_dim`` elements): current price for each stock
+- **Holding positions** (``stock_dim`` elements): number of shares held for each stock
+- **Feature vector** (``I × stock_dim`` elements): technical indicators and turbulence index, ``I`` elements for each stock
 
 Thus, the total state dimension is ``1 + (I + 2) × stock_dim``.
 
 Transition Dynamics
 -------------------
 
-At each time step ``t``, the environment performs the following updates:
+At each time step, the environment performs the following updates:
 
 1. **Scale and Discretize Actions**
 

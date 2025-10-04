@@ -130,7 +130,7 @@ class StockTradingEnv_gym_anytrading(gym.Env):
         assert hmax == np.inf, "No maximum cash restriction"
         assert window_size >= 1, "window_size must be >= 1"
 
-        self.day = day
+        self.day = window_size
         self.df = df.reset_index(drop=True)
         self.stock_dim = stock_dim
         self.hmax = hmax
@@ -158,12 +158,12 @@ class StockTradingEnv_gym_anytrading(gym.Env):
         # Actions: 0 = sell/close long, 1 = buy/open long
         self.action_space = gym.spaces.MultiDiscrete([2] * stock_dim)
 
-        # Base flat state = [cash] + [price] + [position] + [techs...]
-        self._base_obs_len = 1 + self.stock_dim + self.stock_dim + len(self.tech_indicator_list)
+        # Base flat state = [cash] + [price] + [position] + [price_diff]
+        self._base_obs_len = 2*self.stock_dim
         obs_len = self.window_size * self._base_obs_len
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(obs_len,))
-
         self.position = [0] * self.stock_dim  # 0=flat/short, 1=long
+        self.last_trade_price = [self.df.loc[self.day-1, "close"]] * self.stock_dim
 
         self.data = self.df.loc[self.day, :]
         self.terminal = False
@@ -328,23 +328,29 @@ class StockTradingEnv_gym_anytrading(gym.Env):
         begin_total_asset = self._total_asset(self.state)
 
         sell_hits = np.where((acts == 0) & (pos == 1))[0]  # close longs
-        buy_hits = np.where((acts == 1) & (pos == 0))[0]   # open longs
+        buy_hits = np.where((acts == 1) & (pos == 0))[0]
 
         executed = np.zeros_like(acts, dtype=int)
-
-        # SELL (close longs)
-        for i in sell_hits:
-            qty = min(self.hmax, self.state[1 + self.stock_dim])
-            traded = self._sell_stock(i, int(qty))
-            executed[i] = -traded
-            self.position[i] = 0
+        
+        price_diff = [0] * self.stock_dim
+        current_trade_price = [0] * self.stock_dim
 
         # BUY (open longs)
         for i in buy_hits:
             qty = self.hmax
-            traded = self._buy_stock(i, int(qty))
+            traded = self._buy_stock(i, qty)
+            self.last_trade_price[i] = self.state[1+i]
             executed[i] = traded
             self.position[i] = 1
+
+        # SELL (close longs)
+        for i in sell_hits:
+            qty = min(self.hmax, self.state[1 + self.stock_dim])
+            traded = self._sell_stock(i, qty)
+            current_trade_price[i] = self.state[1+i]
+            price_diff[i] = current_trade_price[i] - self.last_trade_price[i]
+            executed[i] = -traded
+            self.position[i] = 0
 
         # s -> s+1
         self.day += 1
@@ -355,14 +361,14 @@ class StockTradingEnv_gym_anytrading(gym.Env):
         self.state = self._update_state()
 
         end_total_asset = self._total_asset(self.state)
-        reward = float((end_total_asset - begin_total_asset) * self.reward_scaling)
+        reward = sum(price_diff)
 
         self.actions_memory.append(executed.copy())
         self.asset_memory.append(self._total_asset(self.state))
         self.date_memory.append(self._get_date())
         self.rewards_memory.append(reward)
         self.state_memory.append(self.state)
-        self._frames.append(np.asarray(self.state, dtype=np.float32))
+        self._frames.append(np.array([self.state[1], self.state[3]], dtype=np.float32))
 
         self.reward = reward
         return self._get_obs(), self.reward, False, False, {}
@@ -415,11 +421,19 @@ class StockTradingEnv_gym_anytrading(gym.Env):
         self.date_memory = [self._get_date()]
         self.episode += 1
 
-        # fill frame buffer with the initial flat state
+        # fill frame buffer with the first window of [price, price_diff]
         self._frames.clear()
-        base = np.asarray(self.state, dtype=np.float32)
-        for _ in range(self.window_size):
-            self._frames.append(base.copy())
+        start = max(0, self.day - self.window_size + 1)
+        end   = self.day + 1  # exclusive
+
+        for idx in range(start, end):
+            p   = float(self.df.iloc[idx]["close"])
+            prv = float(self.df.iloc[idx - 1]["close"]) if idx > 0 else p
+            d   = p - prv
+            self._frames.append(np.array([p, d], dtype=np.float32))
+
+        while len(self._frames) < self.window_size:
+            self._frames.appendleft(self._frames[0].copy())
 
         return self._get_obs(), {}
 
@@ -431,7 +445,7 @@ class StockTradingEnv_gym_anytrading(gym.Env):
     # State helpers
     # ---------------------------------------------------------------------
     def _initiate_state(self) -> list[float]:
-        """Build the initial **flat** state = [cash, price, position, indicators...].
+        """Build the initial **flat** state = [cash, price, position, price_diff].
 
         Returns
         -------
@@ -439,19 +453,24 @@ class StockTradingEnv_gym_anytrading(gym.Env):
             Flat state vector for the current day.
         """
         price = float(self.data["close"])
+        if self.day > 0:
+            prev_price = float(self.df.loc[self.day - 1, "close"])
+            price_diff = price - prev_price
+        else:
+            price_diff = 0.0  # no previous day
         if self.initial:
             state = (
                 [self.initial_amount]
                 + [price]
                 + self.num_stock_shares
-                + [float(self.data[t]) for t in self.tech_indicator_list]
+                + [price_diff]
             )
         else:
             state = (
                 [self.previous_state[0]]
                 + [price]
                 + self.previous_state[(self.stock_dim + 1) : (self.stock_dim * 2 + 1)]
-                + [float(self.data[t]) for t in self.tech_indicator_list]
+                + [price_diff]
             )
         return state
 
@@ -464,11 +483,16 @@ class StockTradingEnv_gym_anytrading(gym.Env):
             Flat state vector for the next day.
         """
         price = float(self.data["close"])
+        if self.day > 0:
+            prev_price = float(self.df.loc[self.day - 1, "close"])
+            price_diff = price - prev_price
+        else:
+            price_diff = 0.0  # no previous day
         state = (
             [self.state[0]]
             + [price]
             + list(self.state[(self.stock_dim + 1) : (self.stock_dim * 2 + 1)])
-            + [float(self.data[t]) for t in self.tech_indicator_list]
+            + [price_diff]
         )
         return state
 
