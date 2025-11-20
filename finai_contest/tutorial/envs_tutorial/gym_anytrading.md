@@ -66,7 +66,7 @@ env_trade = gym.make(
 ```
 Modify environment used in each stage to use the correct datasets.
 
-3.Save training data and prepare for plotting
+3. Save training data and prepare for plotting
 
 ```
 def align_and_export_episode(env_trade, trade_df, time_col="Time", skip=30, out_path="Gym_anytrade.csv"):

@@ -18,11 +18,12 @@ To evaluate the stock market environment from gym-trading-env, follow the follow
 ## Installation
 Gym Trading Env supports Python 3.9+ on Windows, Mac, and Linux. You can install it using pip:
 
-You can install the upstream project (optional) and the packages we use in the notebooks:
-
 ```bash
-pip install git+https://github.com/ClementPerroud/Gym-Trading-Env
-pip install gymnasium stable-baselines3 pandas numpy
+pip install gym-trading-env
+```
+or using git:
+```
+git clone https://github.com/ClementPerroud/Gym-Trading-Env
 ```
 
 Notes:
@@ -31,7 +32,66 @@ Notes:
 
 ## Run Original Code
 
-The upstream repo includes example scripts demonstrating the `TradingEnv`. We used the original as a reference and then adapted parts to fit FinRL-style training and backtesting.
+1. Initialize
+```python
+from finrl.meta.preprocessor.yahoodownloader import YahooDownloader
+df = YahooDownloader(
+   start_date="2023-01-01",
+   end_date="2024-12-31",
+   ticker_list=["^DJI"]
+).fetch_data(auto_adjust=False)
+```
+
+and
+```python
+from finrl.meta.preprocessor.yahoodownloader import YahooDownloader
+TRADE_START_DATE = '2023-01-01'
+TRADE_END_DATE = '2024-12-31'
+df_diji = YahooDownloader(
+   start_date=TRADE_START_DATE, end_date=TRADE_END_DATE, ticker_list=["^DJI"]
+).fetch_data()
+df_diji
+```
+
+Use the same YahooFinance Data
+
+Run 1_Data.ipynb and the data will save into ./data folder in the same directory.
+
+2. Modify training pipeline
+
+The current file runs the training and trading stage with the same dataset, which makes results unsuitable for meaningful comparison with our pipeline. To address, we created an environment for each stage, training and testing.
+
+```python
+env_used = "gym_trading_env"
+```
+Setup Environment for Training
+```python
+from gym_trading_env.environments import TradingEnv
+import gymnasium as gym
+
+def reward_function(history):
+    return np.log(history["portfolio_valuation", -1] / history["portfolio_valuation", -2]) #log (p_t / p_t-1 )
+
+
+env_train = gym.make(
+        "TradingEnv",
+        name= "BTCUSD",
+        df=train,
+        windows = 5,
+        positions = [ -1, -0.5, 0, 0.5, 1, 1.5, 2], # From -1 (=SHORT), to +1 (=LONG)
+        initial_position = 'random', #Initial position
+        trading_fees = 0.01/100, # 0.01% per stock buy / sell
+        borrow_interest_rate = 0.0003/100, #per timestep (= 1h here)
+        reward_function = reward_function,
+        portfolio_initial_value = 1000, # in FIAT (here, USD)
+        max_episode_duration = 500,
+        disable_env_checker = True
+    )
+```
+
+Modify the environment used in each stage to use the correct datasets.
+
+3. Save training data and prepare for plotting
 
 ## Reproduce in our pipeline
 
@@ -116,7 +176,7 @@ env_train = gym.make('TradingEnv-v0', df=df_train, windows=5, ...)
 Important:
 - Do not register the same (unversioned) id multiple times. If `TradingEnv-v0` already exists in your environment (e.g., installed site-packages), registering an unversioned `TradingEnv` will raise a `RegistrationError`.
 
-### 3_Backtest.ipynb — Backtesting, prediction & saving
+### 3_Backtest.ipynb — Backtesting, prediction & saving (WIP)
 
 The backtest notebook loads trained agents and runs predictions. `DRLAgent.DRL_prediction` expects an environment object exposing `get_sb_env()` which returns a (vectorized) SB3 env and the initial observation.
 
