@@ -1,4 +1,4 @@
-#Gym-trading-env
+# Gym-trading-env
 Original Code: https://github.com/ClementPerroud/Gym-Trading-Env/blob/main/src/gym_trading_env/environments.py
 
 To evaluate the stock market environment from gym-trading-env, follow the following tutorial steps:
