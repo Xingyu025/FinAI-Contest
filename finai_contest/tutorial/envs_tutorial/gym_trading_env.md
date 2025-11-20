@@ -1,15 +1,8 @@
 # Gym-trading-env
-Original Code: https://github.com/ClementPerroud/Gym-Trading-Env/blob/main/src/gym_trading_env/environments.py
-
-To evaluate the stock market environment from gym-trading-env, follow the following tutorial steps:
-
-## Installation
-Gym Trading Env supports Python 3.9+ on Windows, Mac, and Linux. You can install it using pip:
-# Gym-trading-env
 
 Original Code: https://github.com/ClementPerroud/Gym-Trading-Env/blob/main/src/gym_trading_env/environments.py
 
-This document explains how we integrated and adapted the original `gym_trading_env` into this repository. It follows the same style used for `gym_anytrading.md` and documents the changes made to `1_Data.ipynb`, `2_Train.ipynb`, and `3_Backtest.ipynb`.
+To evaluate the stock market environment from gym-trading-env, follow the following steps.
 
 **Table of contents**
 - Installation
@@ -23,6 +16,7 @@ This document explains how we integrated and adapted the original `gym_trading_e
 - References
 
 ## Installation
+Gym Trading Env supports Python 3.9+ on Windows, Mac, and Linux. You can install it using pip:
 
 You can install the upstream project (optional) and the packages we use in the notebooks:
 
