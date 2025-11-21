@@ -59,7 +59,7 @@ Run 1_Data.ipynb and the data will save into ./data folder in the same directory
 
 2. Modify training pipeline
 
-The current file runs the training and trading stage with the same dataset, which makes results unsuitable for meaningful comparison with our pipeline. To address, we created an environment for each stage, training and testing.
+The current file runs the training in the new environment. It changes variables to make gym_trading_env scripts usable.
 
 ```python
 env_used = "gym_trading_env"
