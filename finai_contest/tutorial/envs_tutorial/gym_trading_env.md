@@ -93,6 +93,9 @@ Modify the environment used in each stage to use the correct datasets.
 
 3. Save training data and prepare for plotting
 
+
+
+
 ## Reproduce in our pipeline
 
 We updated three notebooks to integrate the environment into this repo's flow.
@@ -176,96 +179,26 @@ env_train = gym.make('TradingEnv-v0', df=df_train, windows=5, ...)
 Important:
 - Do not register the same (unversioned) id multiple times. If `TradingEnv-v0` already exists in your environment (e.g., installed site-packages), registering an unversioned `TradingEnv` will raise a `RegistrationError`.
 
-### 3_Backtest.ipynb — Backtesting, prediction & saving (WIP)
+### 3_Backtest.ipynb — Backtesting, prediction & saving
 
-The backtest notebook loads trained agents and runs predictions. `DRLAgent.DRL_prediction` expects an environment object exposing `get_sb_env()` which returns a (vectorized) SB3 env and the initial observation.
+We implemented helper methods in the gym-trading-env environment file. To adapt functionality in order to plug into our pipeline.
 
-Common issues and solutions:
-
-- `gym.make` may return a wrapped environment (e.g., `OrderEnforcing`) that does not expose `get_sb_env()`.
-- The solution is to unwrap the wrapper and use the underlying env, or patch the wrapper to expose the method.
-
-Unwrap helper used in the notebook:
-
+*environments.py*
 ```python
-def unwrap_env(env):
-    try:
-        base = env.unwrapped
-    except Exception:
-        base = env
-    while hasattr(base, 'env') and getattr(base, 'env') is not None:
-        if hasattr(base, 'get_sb_env'):
-            break
-        base = base.env
-    if not hasattr(base, 'get_sb_env'):
-        raise AttributeError('Underlying env does not implement get_sb_env()')
-    return base
+def get_sb_env(self):
+        """
+        Wrap this single env in a Stable-Baselines3 DummyVecEnv and return (env, obs).
+        """
+        from stable_baselines3.common.vec_env import DummyVecEnv
+        e = DummyVecEnv([lambda: self])
+        obs = e.reset()
+        return e, obs
 
-# Before calling DRL_prediction
-base_env = unwrap_env(e_trade_gym)
-df_account_value_ppo, df_actions_ppo = DRLAgent.DRL_prediction(
-    model=trained_ppo, environment=base_env, deterministic=False
-)
 ```
 
-Monkey-patch alternative (less invasive for quick fix):
+We also uncommented these methods in stablebaselines3's *model.py* DRL_prediction() helper function.
 
 ```python
-base = e_trade_gym.unwrapped
-if hasattr(base, 'get_sb_env'):
-    e_trade_gym.get_sb_env = base.get_sb_env
-```
-
-Saving episode outputs
-
-The notebooks need to extract episode-level histories for plotting and CSV export. We added helper functions attached to the unwrapped env:
-
-```python
-def save_asset_memory(self):
-    dates = self.df['Time'][self._start_tick:self._current_tick].dt.strftime('%Y-%m-%d')
-    profits = self.history.get('total_profit', [])
-    return pd.DataFrame({'date': dates, 'account_value': profits})
-
-def save_action_memory(self):
-    dates = self.df['Time'][self._start_tick:self._current_tick].dt.strftime('%Y-%m-%d')
-    actions = self.history.get('position', [])
-    return pd.DataFrame({'date': dates, 'action': actions})
-
-uw = e_trade_gym.unwrapped
-uw.save_asset_memory = save_asset_memory.__get__(uw)
-uw.save_action_memory = save_action_memory.__get__(uw)
-```
-
-## Troubleshooting & Notes
-
-- Registration conflicts: the environment may already be registered by the installed `gym_trading_env` package in `site-packages` (found registrations in `c:\\Users\\Jason\\miniconda3\\Lib\\site-packages\\gym_trading_env\\__init__.py`). If you need a different behavior, register a new versioned id in the notebook (e.g., `TradingEnv-v1`).
-
-- Wrappers: `gym.make` returns wrappers. Use `env.unwrapped` or iterate `.env` to find the base env that contains custom helper methods.
-
-- `DRLAgent.DRL_prediction` expects `get_sb_env()` on the environment; make sure the object you pass satisfies that expectation (either by unwrapping or monkey-patching).
-
-## Example: list registered TradingEnv IDs at runtime
-
-Run this snippet in a notebook cell to see which `TradingEnv*` IDs exist and which module provided the entry point:
-
-```python
-import importlib
-try:
-    import gymnasium as gym
-except Exception:
-    import gym
-
-registry = getattr(getattr(gym, 'envs', gym), 'registry')
-matches = [k for k in sorted(list(registry.keys())) if 'TradingEnv' in k]
-print(matches)
-for k in matches:
-    spec = registry[k]
-    print(k, spec.entry_point)
-    if spec.entry_point and ':' in spec.entry_point:
-        mod = spec.entry_point.split(':', 1)[0]
-        try:
-            m = importlib.import_module(mod)
-            print('module file:', getattr(m, '__file__', 'n/a'))
-        except Exception as e:
-            print('cannot import', mod, '->', e)
+        account_memory = test_env.env_method(method_name="save_asset_memory")
+        actions_memory = test_env.env_method(method_name="save_action_memory")
 ```
