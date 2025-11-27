@@ -11,9 +11,6 @@ To evaluate the stock market environment from gym-trading-env, follow the follow
   - `1_Data.ipynb` — data preparation
   - `2_Train.ipynb` — construct and register environment, training notes
   - `3_Backtest.ipynb` — backtesting, prediction and saving results
-- Troubleshooting
-- Example: list registered TradingEnv IDs at runtime
-- References
 
 ## Installation
 Gym Trading Env supports Python 3.9+ on Windows, Mac, and Linux. You can install it using pip:
