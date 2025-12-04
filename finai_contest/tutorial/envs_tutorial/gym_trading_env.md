@@ -147,7 +147,6 @@ check_and_make_directories([TRAINED_MODEL_DIR])
 
 For making the environment:
 
-
 1) Add custom helper to gym_trading_env imported files on local machine (environments.py)
 
 ```python
@@ -189,7 +188,6 @@ env_train = TradingEnv(
 We also use FinRL's DRLAgent, but only train PPO. So set *if_using_...* to false other than *if_using_ppo*.
 
 ```python
-
 model_ppo = agent.get_model("ppo", model_kwargs=PPO_PARAMS)
 
 if if_using_ppo:
@@ -286,7 +284,6 @@ df_account_value_ppo.columns = ["date", "account_value", "std"]
 4) Save the aggregated PPO account values
 
 ```python
-
 import os
 os.makedirs("./results_csv", exist_ok=True)
 df_account_value_ppo.to_csv(
@@ -308,5 +305,3 @@ def _calculate_sharpe_ratio(total_profits):
 
 print("Sharpe Ratio:", _calculate_sharpe_ratio(df_account_value_ppo["account_value"]))
 ```
-
-6) Compare results (still finishing)
