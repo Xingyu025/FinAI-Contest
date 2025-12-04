@@ -28,127 +28,68 @@ Notes:
 - If you prefer to keep the original package separate, install upstream into a dedicated environment.
 
 ## Run Original Code
+We chose to replicate and adjust the code at: https://github.com/ClementPerroud/Gym-Trading-Env/blob/main/examples/example_environnement.py
 
-1. Install dependencies
+1. Import the trained data from YahooFinance
 
-From the repo root:
-
-```bash
-pip install -r requirements.txt
-pip install gym-trading-env
-```
-
-2. Initialize (Run 1_Data.ipynb)
-
-Pulling DOW-30 / DJIA data
+1_Data.ipynb saves three models at the same directory. To align the data, use the following to convert the data to the expected format.
 
 ```python
-from finrl.meta.preprocessor.yahoodownloader import YahooDownloader
-df = YahooDownloader(
-   start_date="2023-01-01",
-   end_date="2024-12-31",
-   ticker_list=["^DJI"]
-).fetch_data(auto_adjust=False)
+# Import your datas
+df = pd.read_csv('../data/train_data.csv', parse_dates=["date"], index_col="date")
+df.sort_index(inplace= True)
+df.dropna(inplace= True)
+df.drop_duplicates(inplace= True)
+
+# Generating features
+#WARNING: the column names need to contain keyword 'feature' !
+df["feature_close"] = df["close"].pct_change()
+df["feature_open"] = df["open"]/df["close"]
+df["feature_high"] = df["high"]/df["close"]
+df["feature_low"] = df["low"]/df["close"]
+df["feature_volume"] = df["volume"] / df["volume"].rolling(7*24).max()
+df.dropna(inplace= True)
 ```
 
-and
+2. Create your own reward function
 
 ```python
-from finrl.meta.preprocessor.yahoodownloader import YahooDownloader
-TRADE_START_DATE = '2023-01-01'
-TRADE_END_DATE = '2024-12-31'
-df_diji = YahooDownloader(
-   start_date=TRADE_START_DATE, end_date=TRADE_END_DATE, ticker_list=["^DJI"]
-).fetch_data()
-df_diji
-```
-
-Use the same YahooFinance Data
-
-Run 1_Data.ipynb and the notebook will write three CSVs into a local `./data` folder:
-
-```python
-import os
-os.makedirs("./data", exist_ok=True)
-
-train.to_csv("./data/train_data.csv")
-valid.to_csv("./data/valid_data.csv")
-trade.to_csv('./data/trade_data.csv')
-```
-
-3. Modify training pipeline (Train PPO on gym_trading_env in 2_Train.ipynb)
-
-The current file runs the training in the new environment. It changes variables to make gym_trading_env scripts usable.
-
-```python
-env_used = "gym_trading_env"
-```
-
-Setup Environment with custom log-return reward for Training
-```python
-from gym_trading_env.environments import TradingEnv
-import gymnasium as gym
-
 def reward_function(history):
-    return np.log(history["portfolio_valuation", -1] / history["portfolio_valuation", -2]) #log (p_t / p_t-1 )
-
-
-env_train = gym.make(
-        "TradingEnv",
-        name= "BTCUSD",
-        df=train,
-        windows = 5,
-        positions = [ -1, -0.5, 0, 0.5, 1, 1.5, 2], # From -1 (=SHORT), to +1 (=LONG)
-        initial_position = 'random', #Initial position
-        trading_fees = 0.01/100, # 0.01% per stock buy / sell
-        borrow_interest_rate = 0.0003/100, #per timestep (= 1h here)
-        reward_function = reward_function,
-        portfolio_initial_value = 1000, # in FIAT (here, USD)
-        max_episode_duration = 500,
-        disable_env_checker = True
-    )
+   return np.log(history["portfolio_valuation", -1] / history["portfolio_valuation", -2]) # log(p_t / p_t-1)
 ```
 
-Loads ```train_data.csv```, builds a TradingEnv, trains a PPO agent via FinRL's DRLAgent, and saves the model as:
+3. Modify training pipeline
+The file runs the training and trading stage with the same dataset, which makes results unsuitable for meaningful comparison with our pipeline. As a solution, we create and adjust the environment created.
 
 ```python
-TRAINED_MODEL_DIR / "agent_ppo_gym_trading_env"
+env = gym.make(
+   "TradingEnv",
+   name="BTCUSD",
+   df = df,
+   windows = 5,
+   positions = [ -1, -0.5, 0, 0.5, 1, 1.5, 2], # From -1 (=SHORT), to +1 (=LONG)
+   initial_position = 'random', # Initial position
+   trading_fees = 0.01/100, # 0.01% per stock buy / sell
+   borrow_interest_rate = 0.0003 / 100, # per timestep (= 1h here)
+   reward_function = reward_function,
+   portfolio_initial_value = 1000, # in FIAT (here, USD)
+   max_episode_duration = 500,
+   disable_env_checker = True
+)
+
+env.add_metric('Position Changes', lambda history : np.sum(np.diff(history['position']) != 0))
+env.add_metric('Episode Length', lambda history : len(history['position']))
+
+done, truncated = False, False
+
+observation, info = env.reset()
+print(info)
+
+while not done and not truncated:
+   action = env.action_space.sample()
+   observation, reward, done, truncated, info = env.step(action)
+   print(observation)
 ```
-
-4. Backtesting and export results (3_Backtest.ipynb)
-
-Reconstruct a TradingEnv using the same ```env_train = gym.make(...)``` cell above
-
-Loads agent_ppo_gym_trading_env.
-
-Runs 20 stochastic evaluation episodes (PPO with deterministic=False) and aggregates the mean/std of the portfolio value.
-```python
-num_runs = 20
-
-df_account_value_ppo_list = []
-df_actions_ppo_list = []
-
-for i in range(num_runs):
-    df_account_value_ppo, df_actions_ppo = DRLAgent.DRL_prediction(
-        model=trained_ppo, 
-        environment = e_trade_gym, deterministic=False) if if_using_ppo else (None, None)
-    df_account_value_ppo_list.append(df_account_value_ppo)
-    df_actions_ppo_list.append(df_actions_ppo)
-    # print(df_account_value_ppo_list)
-
-df_account_value_all = pd.concat([df.set_index("date")["account_value"] for df in df_account_value_ppo_list],axis=1)
-df_account_value_all.columns = [f"run_{i+1}" for i in range(len(df_account_value_ppo_list))]
-df_account_value_all['mean'] = df_account_value_all.mean(axis=1)
-df_account_value_all['std'] = df_account_value_all.std(axis=1)
-```
-
-Saves the aggregated equity curve to:
-``` 
-./results_csv/account_value_ppo_gym_trading_env.csv 
-```
-
-Finally, computes and prints summary statistics including Sharpe ratio, and builds a metrics DataFrame for further analysis.
-
 
 ## Reproduce in our pipeline
 
@@ -367,3 +308,5 @@ def _calculate_sharpe_ratio(total_profits):
 
 print("Sharpe Ratio:", _calculate_sharpe_ratio(df_account_value_ppo["account_value"]))
 ```
+
+6) Compare results (still finishing)
