@@ -1,3 +1,5 @@
+# Adapted from gym-trading-env(https://github.com/CLementPerroud/Gym-Trading-Env/)
+
 class Portfolio:
     def __init__(self, asset, fiat, interest_asset = 0, interest_fiat = 0):
         self.asset =asset

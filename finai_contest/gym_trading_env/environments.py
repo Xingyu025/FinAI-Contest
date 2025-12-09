@@ -1,4 +1,4 @@
-# Adapted from https://github.com/CLementPerroud/Gym-Trading-Env/
+# Adapted from gym-trading-env(https://github.com/CLementPerroud/Gym-Trading-Env/)
 
 import gymnasium as gym
 from gymnasium import spaces

@@ -1,6 +1,7 @@
 #python cache files
 finai_contest/__pycache__
 finai_contest/env_stock_trading/__pycache__
+finai_contest/gym_trading_env/__pycache__
 
 #pipeline saved results
 finai_contest/pipeline/results

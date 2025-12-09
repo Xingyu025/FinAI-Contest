@@ -1,3 +1,5 @@
+# Adapted from gym-trading-env(https://github.com/CLementPerroud/Gym-Trading-Env/)
+
 import numpy as np
 
 class History:
