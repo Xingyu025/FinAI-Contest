@@ -1,3 +1,5 @@
+# Adapted from https://github.com/CLementPerroud/Gym-Trading-Env/
+
 import gymnasium as gym
 from gymnasium import spaces
 import pandas as pd
