@@ -273,3 +273,153 @@ class TradingEnvStandardized(gym.Env):
         self._update_obs_window()
 
         return self.obs_return.astype(np.float32), {}
+
+def step(
+        self, action: int
+    ) -> Tuple[np.ndarray, float, bool, bool, Dict[str, Any]]:
+        """
+        Execute one environment step.
+
+        Parameters
+        ----------
+        action : int
+            0=Hold, 1=Buy (long), 2=Sell (short).
+
+        Returns
+        -------
+        obs : np.ndarray
+            Next observation window of shape (obs_len, obs_feature_len).
+        reward : float
+            Per-step reward (here: sum of realized rewards over the window).
+        terminated : bool
+            True if episode ended (end of session or gameover).
+        truncated : bool
+            False (no time-limit truncation implemented).
+        info : dict
+            Extra info (contains `info` only at episode end).
+        """
+        assert self.df_sample is not None and self.price is not None
+
+        current_index = self.step_st + self.obs_len - 1
+        current_price_mean = float(self.price_mean_arr[current_index])
+        current_mkt_position = float(self.posi_arr[current_index])
+
+        self.t_index += 1
+        self.step_st += self.step_len
+
+        # Refresh observation window & change slices
+        self._update_obs_window()
+
+        # Change buffers: last `step_len` rows of the window
+        self.chg_posi = self.obs_posi[-self.step_len:]
+        self.chg_posi_var = self.obs_posi_var[-self.step_len:]
+        self.chg_posi_entry_cover = self.obs_posi_entry_cover[-self.step_len:]
+        self.chg_price = self.obs_price[-self.step_len:]
+        self.chg_price_mean = self.obs_price_mean[-self.step_len:]
+        self.chg_reward_fluctuant = self.obs_reward_fluctuant[-self.step_len:]
+        self.chg_makereal = self.obs_makereal[-self.step_len:]
+        self.chg_reward = self.obs_reward[-self.step_len:]
+
+        terminated = False
+
+        # ----------------- End-of-session forced close -----------------
+        if self.step_st + self.obs_len + self.step_len >= len(self.price):
+            terminated = True
+            # No new action; force close on last segment if position != 0
+            if current_mkt_position != 0:
+                self.chg_price_mean[:] = current_price_mean
+                self.chg_posi[:] = 0.0
+                self.chg_posi_var[:1] = -current_mkt_position
+                self.chg_posi_entry_cover[:1] = -2.0
+                self.chg_makereal[:1] = 1.0
+                # Realized reward for closing all
+                self.chg_reward[:] = (
+                    (self.chg_price - self.chg_price_mean) * current_mkt_position
+                    - abs(current_mkt_position) * self.fee
+                ) * self.chg_makereal
+
+            # Build transaction_details & info at the end
+            self.transaction_details = pd.DataFrame(
+                [
+                    self.posi_arr,
+                    self.posi_variation_arr,
+                    self.posi_entry_cover_arr,
+                    self.price_mean_arr,
+                    self.reward_fluctuant_arr,
+                    self.reward_makereal_arr,
+                    self.reward_arr,
+                ],
+                index=[
+                    "position",
+                    "position_variation",
+                    "entry_cover",
+                    "price_mean",
+                    "reward_fluctuant",
+                    "reward_makereal",
+                    "reward",
+                ],
+                columns=self.df_sample.index,
+            ).T
+            self.info = self.df_sample.join(self.transaction_details)
+
+        # ----------------- Trading logic (no forced close) --------------
+        if not terminated:
+            # Use next tick inside the change segment as entry price
+            enter_price = float(self.chg_price[0])
+
+            # Respect position limits (convert impossible actions to Hold)
+            if action == 1 and current_mkt_position == self.max_position:
+                action = 0
+            if action == 2 and current_mkt_position == -self.max_position:
+                action = 0
+
+            # Long / short / cover / stay
+            if action == 1 and self.max_position > current_mkt_position >= 0:
+                # open/increase long
+                open_posi = (current_mkt_position == 0)
+                self._long(open_posi, enter_price, current_mkt_position, current_price_mean)
+
+            elif action == 2 and -self.max_position < current_mkt_position <= 0:
+                # open/increase short
+                open_posi = (current_mkt_position == 0)
+                self._short(open_posi, enter_price, current_mkt_position, current_price_mean)
+
+            elif action == 1 and current_mkt_position < 0:
+                # covering short
+                self._short_cover(current_price_mean, current_mkt_position)
+
+            elif action == 2 and current_mkt_position > 0:
+                # covering long
+                self._long_cover(current_price_mean, current_mkt_position)
+
+            elif action == 0 and current_mkt_position != 0:
+                # stay on with current position
+                self._stayon(current_price_mean, current_mkt_position)
+
+        # ----------------- Update unrealized P&L ------------------------
+        self.chg_reward_fluctuant[:] = (
+            (self.chg_price - self.chg_price_mean) * self.chg_posi
+            - np.abs(self.chg_posi) * self.fee
+        )
+
+        # At this point, reward_arr & reward_fluctuant_arr windows are updated
+        # and obs_return should be recomputed with latest arrays
+        self._update_obs_window()
+
+        # Here we simply return the sum of reward over the observation window,
+        # consistent with your current implementation.
+        step_reward = float(self.obs_reward.sum())
+
+        # Optional gameover condition, if configured
+        if self.gameover_limit is not None:
+            # approximate equity = sum(realized) + last unrealized
+            current_idx = self.step_st + self.obs_len - 1
+            realized_total = float(self.reward_arr[: current_idx + 1].sum())
+            unrealized = float(self.reward_fluctuant_arr[current_idx])
+            equity = realized_total + unrealized
+            if equity < -self.gameover_limit:
+                terminated = True
+
+        return self.obs_return.astype(np.float32), step_reward, terminated, False, (
+            {} if self.info is None else {"info": self.info}
+        )
