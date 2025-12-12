@@ -85,4 +85,22 @@ For each trade:
 - Profit/los is recorded into `reward_sum`
 - A new row is appended to `transaction_details`
 
+3. **Advance Market Timeline**
+After trade evaluation:
+```python
+self.step_st += self.step_len
+```
+The new observation features:
+```python
+self.obs_res = self.obs_features[self.step_st : self.step_st + self.obs_len]
+```
+
+4. **Check Termination Conditions**
+Episode ends if:
+- The observation window reaches the end of available data (`step_st + obs_len + step_len ≥ total_length`)
+- The agent hits the game-over loss threshold (`reward_sum + reward_fluctuant < -gameover_limit`)
+When ending:
+- Any open position is automatically closed
+- Final realized reward is added to `reward_sum`
+
 ## Initial Condition
