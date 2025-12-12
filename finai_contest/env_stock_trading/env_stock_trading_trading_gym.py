@@ -466,3 +466,27 @@ class TradingEnvStandardized(gym.Env):
             self.chg_posi[:] = after_act_mkt_position
             self.chg_posi_var[:1] = -1.0
             self.chg_posi_entry_cover[:1] = 2.0
+    
+    def _short_cover(self, current_price_mean: float, current_mkt_position: float) -> None:
+        self.chg_price_mean[:] = current_price_mean
+        self.chg_posi[:] = current_mkt_position + 1.0
+        self.chg_makereal[:1] = 1.0
+        self.chg_reward[:] = (
+            (self.chg_price - self.chg_price_mean) * (-1.0) - self.fee
+        ) * self.chg_makereal
+        self.chg_posi_var[:1] = 1.0
+        self.chg_posi_entry_cover[:1] = -1.0
+
+    def _long_cover(self, current_price_mean: float, current_mkt_position: float) -> None:
+        self.chg_price_mean[:] = current_price_mean
+        self.chg_posi[:] = current_mkt_position - 1.0
+        self.chg_makereal[:1] = 1.0
+        self.chg_reward[:] = (
+            (self.chg_price - self.chg_price_mean) * (1.0) - self.fee
+        ) * self.chg_makereal
+        self.chg_posi_var[:1] = -1.0
+        self.chg_posi_entry_cover[:1] = -1.0
+
+    def _stayon(self, current_price_mean: float, current_mkt_position: float) -> None:
+        self.chg_posi[:] = current_mkt_position
+        self.chg_price_mean[:] = current_price_mean
