@@ -490,3 +490,64 @@ class TradingEnvStandardized(gym.Env):
     def _stayon(self, current_price_mean: float, current_mkt_position: float) -> None:
         self.chg_posi[:] = current_mkt_position
         self.chg_price_mean[:] = current_price_mean
+
+    # ------------------------------------------------------------------
+    # Observation helpers
+    # ------------------------------------------------------------------
+    def _update_obs_window(self) -> None:
+        """Update all obs_* slices and obs_return from current step_st."""
+        s = self.step_st
+        e = self.step_st + self.obs_len
+
+        # Clip window if near the end
+        e = min(e, len(self.price))
+
+        self.obs_state = self.obs_features[s:e]
+        self.obs_posi = self.posi_arr[s:e]
+        self.obs_posi_var = self.posi_variation_arr[s:e]
+        self.obs_posi_entry_cover = self.posi_entry_cover_arr[s:e]
+        self.obs_price = self.price[s:e]
+        self.obs_price_mean = self.price_mean_arr[s:e]
+        self.obs_reward_fluctuant = self.reward_fluctuant_arr[s:e]
+        self.obs_makereal = self.reward_makereal_arr[s:e]
+        self.obs_reward = self.reward_arr[s:e]
+
+        if self.return_transaction:
+            self.obs_return = np.concatenate(
+                (
+                    self.obs_state,
+                    self.obs_posi[:, np.newaxis],
+                    self.obs_posi_var[:, np.newaxis],
+                    self.obs_posi_entry_cover[:, np.newaxis],
+                    self.obs_price[:, np.newaxis],
+                    self.obs_price_mean[:, np.newaxis],
+                    self.obs_reward_fluctuant[:, np.newaxis],
+                    self.obs_makereal[:, np.newaxis],
+                    self.obs_reward[:, np.newaxis],
+                ),
+                axis=1,
+            )
+        else:
+            self.obs_return = self.obs_state
+
+        # If we're at the end and window is shorter than obs_len, pad
+        if self.obs_return.shape[0] < self.obs_len:
+            pad_rows = self.obs_len - self.obs_return.shape[0]
+            pad = np.repeat(self.obs_return[-1:, :], pad_rows, axis=0)
+            self.obs_return = np.concatenate([self.obs_return, pad], axis=0)
+
+    # ------------------------------------------------------------------
+    # Render
+    # ------------------------------------------------------------------
+    def render(self) -> np.ndarray:
+        """Simple render: return current observation (for debugging)."""
+        return self.obs_return.copy()
+
+    # ------------------------------------------------------------------
+    # SB3 helper
+    # ------------------------------------------------------------------
+    def get_sb_env(self) -> Tuple[DummyVecEnv, Any]:
+        """Wrap this env in SB3 DummyVecEnv and return (env, obs)."""
+        e = DummyVecEnv([lambda: self])
+        obs = e.reset()
+        return e, obs
