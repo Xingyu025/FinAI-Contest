@@ -104,3 +104,16 @@ When ending:
 - Final realized reward is added to `reward_sum`
 
 ## Initial Condition
+- **Market data segment** (`df_sample`) is set to `_random_choice_section`.
+- **Stock price** (`price`) extracted from the selected sesion and stored as a NumPy array.
+- **Market feature matrix** (`obs_features`) extraced from `df_sample` according to `feature_names`.
+- **Market position** (`posi_arr`) initialized to an array of zeros.
+- **Position variation** (`posi_variation_arr`) is initialized to zeros.
+- **Position entry/ cover indicator** (`posi_entry_cover_arr`) is initialized to zeros.
+- **Average position price** (`price_mean_arr`) is initialized as a copy of stock price array.
+- **Unrealized reward** (`reward_fluctuation_arr`) is initialized to zero for all time steps.
+- **Realized reward indicator** (`reward_makereal_arr`) is initialized to `0`.
+- **Realized reward** (`reward_arr`) is initialized to `0`.
+- **Step pointer** (`step_st`) is set to `0`.
+- **Additional information** (`info`) is initialized to `None`.
+- **Transaction log** (`transaction_details`) is initalized as an empty DataFrame.
