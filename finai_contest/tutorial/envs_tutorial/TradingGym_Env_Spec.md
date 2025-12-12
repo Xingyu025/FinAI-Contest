@@ -38,8 +38,32 @@ If attemping to sell while already at `-max_postion`, action becomes **hold**.
 - **Transaction log**(`transaction_details`): An empty DataFrame used to record detailed information about all trading action, positions, and rewards during the episode.
 
 ## Observation Space
+`ob_state` - **rolling market window**
+- Shape: `(obs_len, feature_len)`
+- Definition: a slice of 'obs_features' starting at `step_st`:
+```python
+obs_state = obs_features[step_st : step_st + obs_len]
+```
+- Each row correspond to one time step in the recent past.
+- Each column corresponds to one of the chosen `feature_names`(e.g. `price`, `volume`, etc)
 
 ## Reward Design
+The environment has two types of reward:
+- **Unrealized (fluctuating) reward**
+If the agent does not close a position:
+```python
+reward_ret = reward_fluctuant / fluc_div
+```
+- **Realized reward**
+When the agent close a long or short position ("cover" action):
+```python
+reward = (sell_price - price_mean - fee) * position    # long closing
+reward = (price_mean - buy_price - fee) * (-position)  # short closing
+```
+This reward is added directly to `reward_sum`.
+Notes:
+- Rewards are positive for profitable closes, negative for losses.
+- Unrealized rewards are scaled by `fluc_div` to avoid exploding values.
 
 ## Transition Dynamics
 
