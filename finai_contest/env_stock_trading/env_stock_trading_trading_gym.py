@@ -222,7 +222,7 @@ class TradingEnvStandardized(gym.Env):
         self.obs_makereal: np.ndarray | None = None
         self.obs_reward: np.ndarray | None = None
         self.obs_return: np.ndarray | None = None
- # ------------------------------------------------------------------
+    # ------------------------------------------------------------------
     # Session sampler
     # ------------------------------------------------------------------
     def _random_choice_section(self) -> pd.DataFrame:
@@ -274,7 +274,7 @@ class TradingEnvStandardized(gym.Env):
 
         return self.obs_return.astype(np.float32), {}
 
-def step(
+    def step(
         self, action: int
     ) -> Tuple[np.ndarray, float, bool, bool, Dict[str, Any]]:
         """
@@ -423,3 +423,46 @@ def step(
         return self.obs_return.astype(np.float32), step_reward, terminated, False, (
             {} if self.info is None else {"info": self.info}
         )
+
+    # ------------------------------------------------------------------
+    # Trading helpers (array-based)
+    # ------------------------------------------------------------------
+    def _long(
+        self,
+        open_posi: bool,
+        enter_price: float,
+        current_mkt_position: float,
+        current_price_mean: float,
+    ) -> None:
+        if open_posi:
+            self.chg_price_mean[:] = enter_price
+            self.chg_posi[:] = 1.0
+            self.chg_posi_var[:1] = 1.0
+            self.chg_posi_entry_cover[:1] = 1.0
+        else:
+            after_act_mkt_position = current_mkt_position + 1.0
+            self.chg_price_mean[:] = (current_price_mean * current_mkt_position + enter_price) / after_act_mkt_position
+            self.chg_posi[:] = after_act_mkt_position
+            self.chg_posi_var[:1] = 1.0
+            self.chg_posi_entry_cover[:1] = 2.0
+
+    def _short(
+        self,
+        open_posi: bool,
+        enter_price: float,
+        current_mkt_position: float,
+        current_price_mean: float,
+    ) -> None:
+        if open_posi:
+            self.chg_price_mean[:] = enter_price
+            self.chg_posi[:] = -1.0
+            self.chg_posi_var[:1] = -1.0
+            self.chg_posi_entry_cover[:1] = 1.0
+        else:
+            after_act_mkt_position = current_mkt_position - 1.0
+            self.chg_price_mean[:] = (
+                current_price_mean * abs(current_mkt_position) + enter_price
+            ) / abs(after_act_mkt_position)
+            self.chg_posi[:] = after_act_mkt_position
+            self.chg_posi_var[:1] = -1.0
+            self.chg_posi_entry_cover[:1] = 2.0
