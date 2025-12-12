@@ -66,5 +66,23 @@ Notes:
 - Unrealized rewards are scaled by `fluc_div` to avoid exploding values.
 
 ## Transition Dynamics
+At each environment step, the following process occur:
+1. **Interpret Agent Action**
+- Action 1 -> attempt to **buy**
+- Action 2 -> attempt to **sell**
+- Action 0 -> **hold**
+Position constraints are enforced (cannot exceed ± `max_position`)
+
+2. **Execute Trade Logic**
+The environment handles:
+- **Opening** long/short positions (`transact_type = "new"`)
+- **Adding to existing** long/short positions
+- **Closing (covering)** opposite-side positions (`transact_type = "cover"`)
+For each trade:
+- Position count is updated
+- Average price (`price_mean`) is recalculated
+- Fees are applied
+- Profit/los is recorded into `reward_sum`
+- A new row is appended to `transaction_details`
 
 ## Initial Condition
