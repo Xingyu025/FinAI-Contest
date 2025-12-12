@@ -222,4 +222,54 @@ class TradingEnvStandardized(gym.Env):
         self.obs_makereal: np.ndarray | None = None
         self.obs_reward: np.ndarray | None = None
         self.obs_return: np.ndarray | None = None
+ # ------------------------------------------------------------------
+    # Session sampler
+    # ------------------------------------------------------------------
+    def _random_choice_section(self) -> pd.DataFrame:
+        """Randomly choose a session from df."""
+        random_int = np.random.randint(self.date_leng)
+        if random_int == self.date_leng - 1:
+            begin_point = self.begin_fs.index[random_int]
+            end_point = None
+        else:
+            begin_point, end_point = self.begin_fs.index[random_int : random_int + 2]
+        df_section = self.df.iloc[begin_point:end_point]
+        return df_section
 
+    # ------------------------------------------------------------------
+    # Gymnasium API
+    # ------------------------------------------------------------------
+    def reset(
+        self,
+        *,
+        seed: int | None = None,
+        options: Dict[str, Any] | None = None,
+    ) -> Tuple[np.ndarray, Dict[str, Any]]:
+        super().reset(seed=seed)
+
+        # Sample one session
+        self.df_sample = self._random_choice_section()
+        self.step_st = 0
+
+        # Define price and features
+        self.price = self.df_sample[self.price_name].to_numpy(dtype=float)
+        self.obs_features = self.df_sample[self.using_feature].to_numpy(dtype=float)
+
+        # Position & PnL arrays
+        self.posi_arr = np.zeros_like(self.price, dtype=float)
+        self.posi_variation_arr = np.zeros_like(self.posi_arr, dtype=float)
+        self.posi_entry_cover_arr = np.zeros_like(self.posi_arr, dtype=float)
+
+        self.price_mean_arr = self.price.copy()
+        self.reward_fluctuant_arr = (self.price - self.price_mean_arr) * self.posi_arr
+        self.reward_makereal_arr = np.zeros_like(self.posi_arr, dtype=float)
+        self.reward_arr = np.zeros_like(self.posi_arr, dtype=float)
+
+        self.info = None
+        self.transaction_details = pd.DataFrame()
+        self.t_index = 0
+
+        # Build initial observation window
+        self._update_obs_window()
+
+        return self.obs_return.astype(np.float32), {}
