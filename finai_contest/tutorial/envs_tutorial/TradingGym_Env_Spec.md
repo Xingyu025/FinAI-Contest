@@ -50,17 +50,20 @@ obs_state = obs_features[step_st : step_st + obs_len]
 ## Reward Design
 The environment has two types of reward:
 - **Unrealized (fluctuating) reward**
+
 If the agent does not close a position:
 ```python
 reward_ret = reward_fluctuant / fluc_div
 ```
 - **Realized reward**
+
 When the agent close a long or short position ("cover" action):
 ```python
 reward = (sell_price - price_mean - fee) * position    # long closing
 reward = (price_mean - buy_price - fee) * (-position)  # short closing
 ```
 This reward is added directly to `reward_sum`.
+
 Notes:
 - Rewards are positive for profitable closes, negative for losses.
 - Unrealized rewards are scaled by `fluc_div` to avoid exploding values.
@@ -71,13 +74,16 @@ At each environment step, the following process occur:
 - Action 1 -> attempt to **buy**
 - Action 2 -> attempt to **sell**
 - Action 0 -> **hold**
+
 Position constraints are enforced (cannot exceed ± `max_position`)
 
 2. **Execute Trade Logic**
+
 The environment handles:
 - **Opening** long/short positions (`transact_type = "new"`)
 - **Adding to existing** long/short positions
 - **Closing (covering)** opposite-side positions (`transact_type = "cover"`)
+
 For each trade:
 - Position count is updated
 - Average price (`price_mean`) is recalculated
@@ -86,6 +92,7 @@ For each trade:
 - A new row is appended to `transaction_details`
 
 3. **Advance Market Timeline**
+
 After trade evaluation:
 ```python
 self.step_st += self.step_len
@@ -99,6 +106,7 @@ self.obs_res = self.obs_features[self.step_st : self.step_st + self.obs_len]
 Episode ends if:
 - The observation window reaches the end of available data (`step_st + obs_len + step_len ≥ total_length`)
 - The agent hits the game-over loss threshold (`reward_sum + reward_fluctuant < -gameover_limit`)
+
 When ending:
 - Any open position is automatically closed
 - Final realized reward is added to `reward_sum`
